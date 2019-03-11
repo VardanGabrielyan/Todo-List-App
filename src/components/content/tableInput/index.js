@@ -1,7 +1,10 @@
 import React from "react";
 import './styles.css';
+import GoodTodo from "./GoodTodo.js"
+import BadTodo from "./BadTodo.js"
 
     class TableInput extends React.Component {
+       
 
     inp = null;
     componentDidMount() {  
