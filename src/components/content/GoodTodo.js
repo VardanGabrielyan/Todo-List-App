@@ -92,15 +92,14 @@ import Content from "./index.js"
                     {
                         this.state.good.map(val => (
                             <TableInput 
-                                isSelectedInput={this.state.GoodIsSelectedInput}
-                                selectInput={this.selectInput}
+                                isGoodSelectedInput={this.state.GoodIsSelectedInput}
                                 label={val.label}
                                 key={val.id}
                                 id={val.id}
                                 //handleChange={this.handleChange}
                                 GoodIsSelectedInput={this.state.GoodIsSelectedInput === val.id}
                                 onKeyDownHandler={this.onKeyDownHandler}
-                                onFocusHandler={this.onFocusHandler}
+                                //onFocusHandler={this.onFocusHandler}
                                 //onCutHandler={this.onCutHandler}
                             />))        
                     }

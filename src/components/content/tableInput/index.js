@@ -1,21 +1,24 @@
 import React from "react";
 import './styles.css';
-import GoodTodo from "./GoodTodo.js"
-import BadTodo from "./BadTodo.js"
+import GoodTodo from "../GoodTodo.js"
+import BadTodo from "../BadTodo.js"
 
     class TableInput extends React.Component {
        
-
+    
     inp = null;
     componentDidMount() {  
-        if (this.props.isSelectedInput) {
+        if (this.props.GoodIsSelectedInput) {
             this.inp.focus()        
         };
     }
     componentDidUpdate() {  
-        if (this.props.isSelectedInput) {
+        if (this.props.GoodIsSelectedInput) {
             this.inp.focus()        
         };
+        if(this.props.BadIsSelectedInput){
+            this.inp.focus()
+        }
     }
 
     inputRef = input => this.inp = input; 
@@ -29,7 +32,7 @@ import BadTodo from "./BadTodo.js"
                     ref={this.inputRef}
                     key={this.props.key}
                     value={this.props.value} 
-                    autoFocus={this.props.isSelectedInput === this.props.id}
+                    autoFocus={this.props.GoodIsSelectedInput === this.props.id}
                     id={this.props.id}
                     onKeyDown={this.props.onKeyDownHandler}
                     //onChange={this.props.onCutHandler}

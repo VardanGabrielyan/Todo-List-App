@@ -3,9 +3,6 @@ import  "./styles.css"
 import TableInput from "./tableInput";
 import Content from "./index.js"
 
-
-
-
     class BadTodo extends React.Component{
     
     constructor(props){
@@ -22,7 +19,6 @@ import Content from "./index.js"
         get currentId() {
             return ++this._currentId;    
         }   
-
 
 
         addLabel = (type) =>  {
@@ -95,7 +91,6 @@ import Content from "./index.js"
                     {
                         this.state.bad.map(val => (
                             <TableInput
-                                selectInput={this.selectInput}
                                 label={val.label}
                                 key={val.id}
                                 id={val.id}
