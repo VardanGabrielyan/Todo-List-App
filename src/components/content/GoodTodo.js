@@ -3,7 +3,6 @@ import  "./styles.css"
 import TableInput from "./tableInput";
 import Content from "./index.js"
 
-
     class GoodTodo extends React.Component{
     
     constructor(props){
@@ -12,15 +11,28 @@ import Content from "./index.js"
             GoodIsSelectedInput: 1,
             good: [{id: 1 }]
             
-           
         };
     }
+
     _currentId = 1;
         get currentId() {
             return ++this._currentId;    
         }   
-    
 
+        getSelectedTextRemoved = event =>{
+            const selectedText = window.getSelection().toString();
+            console.log('dddd', )
+            if(
+                selectedText &&
+                selectedText.length === event.target.value.length &&
+                event.keyCode===8
+            ){
+                this.setState({
+                    good: this.state.good.slice(0, this.state.good.length - 1)
+                })
+            }
+        }
+    
         addLabel = (type) =>  {
             switch (type) {
                 case 'good':
@@ -46,9 +58,6 @@ import Content from "./index.js"
             }
         }
 
-
-
-
     onKeyDownHandler = event => {
 
         if (!event.target.value.trim().length && event.keyCode >= 48 && event.keyCode <= 90) {
@@ -66,37 +75,33 @@ import Content from "./index.js"
             console.log(this.state.good)
             return
         }
-        if (event.target.value.trim().length === 1 && event.keyCode === 8){
+
+        if (event.keyCode === 8 || event.keyCode === 32 || event.keyCode === 46) {
+            const selectedText = window.getSelection().toString();
             
-            this.setState({
-                good: this.state.good.slice(0, this.state.good.length - 1)
-            })
-        }
-        // if(event.target.value.length===0){
-            
-        //     this.setState({
-        //         isSelectedInput: Number(event.target.id)-1
-                
-        //     })
-        // } 
+            if (
+                event.target.value.trim().length === 1
+                || (selectedText && selectedText.length === event.target.value.length)  
+            ){
+                this.setState({
+                    good: this.state.good.slice(0, this.state.good.length - 1)
+                })
+            }
+        }    
     }
 
-
-
-
-
-    render(){
+    render() {
         return(           
             
                 <td className="tableStyle" valign="top">
                     {
                         this.state.good.map(val => (
                             <TableInput 
+                                getSelectedTextRemoved={this.getSelectedTextRemoved}
                                 isGoodSelectedInput={this.state.GoodIsSelectedInput}
                                 label={val.label}
                                 key={val.id}
                                 id={val.id}
-                                //handleChange={this.handleChange}
                                 GoodIsSelectedInput={this.state.GoodIsSelectedInput === val.id}
                                 onKeyDownHandler={this.onKeyDownHandler}
                                 //onFocusHandler={this.onFocusHandler}

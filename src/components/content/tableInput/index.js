@@ -35,7 +35,8 @@ import BadTodo from "../BadTodo.js"
                     autoFocus={this.props.GoodIsSelectedInput === this.props.id}
                     id={this.props.id}
                     onKeyDown={this.props.onKeyDownHandler}
-                    //onChange={this.props.onCutHandler}
+                    onCut={this.props.getSelectedTextRemoved}
+                    //onChange={this.props.getSelectedTextRemoved}
                     //onFocus={this.props.onFocusHandler}
                  />
                 <input type="checkbox"/>
