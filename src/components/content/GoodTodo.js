@@ -19,25 +19,26 @@ import Content from "./index.js"
             return ++this._currentId;    
         }   
 
-        getSelectedTextRemoved = event =>{
+        getSelectedTextCut = event =>{
             const selectedText = window.getSelection().toString();
-            console.log('dddd', )
-            if(
-                selectedText &&
-                selectedText.length === event.target.value.length &&
-                event.keyCode===8
-            ){
-                this.setState({
-                    good: this.state.good.slice(0, this.state.good.length - 1)
-                })
+            function func(){
+                return false
             }
+            event.oncut= function(){ func()}
+            const cut = event.oncut;
+            if(cut && selectedText && selectedText.length === event.target.value.length)  {
+               
+                this.setState({
+                    good: this.state.good.slice(0, this.state.good.length - 1,selectedText.length)
+                })
+            } 
+        
         }
     
         addLabel = (type) =>  {
             switch (type) {
                 case 'good':
-                // console.log(this.state.good)
-                            
+                                         
                     this.setState({
                             good: [
                                 ...this.state.good, 
@@ -58,6 +59,7 @@ import Content from "./index.js"
             }
         }
 
+
     onKeyDownHandler = event => {
 
         if (!event.target.value.trim().length && event.keyCode >= 48 && event.keyCode <= 90) {
@@ -65,14 +67,13 @@ import Content from "./index.js"
             return
         } 
         if (event.keyCode === 13 && event.target.value.length) {    
-            console.log('enter' );
+            
             
             this.setState({
                 GoodIsSelectedInput: this.state.good[this.state.good.length-1].id
                 
             })
-            console.log(this.state.GoodIsSelectedInput)
-            console.log(this.state.good)
+            
             return
         }
 
@@ -97,7 +98,7 @@ import Content from "./index.js"
                     {
                         this.state.good.map(val => (
                             <TableInput 
-                                getSelectedTextRemoved={this.getSelectedTextRemoved}
+                                getSelectedTextCut={this.getSelectedTextCut}
                                 isGoodSelectedInput={this.state.GoodIsSelectedInput}
                                 label={val.label}
                                 key={val.id}

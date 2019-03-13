@@ -3,7 +3,7 @@ import './styles.css';
 import GoodTodo from "../GoodTodo.js"
 import BadTodo from "../BadTodo.js"
 
-    class TableInput extends React.Component {
+ class TableInput extends React.Component {
        
     
     inp = null;
@@ -32,10 +32,10 @@ import BadTodo from "../BadTodo.js"
                     ref={this.inputRef}
                     key={this.props.key}
                     value={this.props.value} 
-                    autoFocus={this.props.GoodIsSelectedInput === this.props.id}
+                    //autoFocus={this.props.BadIsSelectedInput === this.props.id}
                     id={this.props.id}
                     onKeyDown={this.props.onKeyDownHandler}
-                    onCut={this.props.getSelectedTextRemoved}
+                    onCut={this.props.getSelectedTextCut}
                     //onChange={this.props.getSelectedTextRemoved}
                     //onFocus={this.props.onFocusHandler}
                  />

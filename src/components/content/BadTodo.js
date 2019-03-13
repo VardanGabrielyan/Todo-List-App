@@ -20,6 +20,24 @@ import Content from "./index.js"
             return ++this._currentId;    
         }   
 
+        getSelectedTextCut = event =>{
+            const selectedText = window.getSelection().toString();
+            function func(){
+                return false
+            }
+            event.oncut= function(){ func()}
+            const cut = event.oncut;
+            if(cut && selectedText && selectedText.length === event.target.value.length)  {
+               
+                this.setState({
+                    bad: this.state.bad.slice(0, this.state.bad.length - 1,selectedText.length)
+                })
+            } 
+        
+        }
+
+
+
 
         addLabel = (type) =>  {
             switch (type) {
@@ -45,9 +63,6 @@ import Content from "./index.js"
             }
         }
 
-
-
-
     onKeyDownHandler = event => {
 
         if (!event.target.value.trim().length && event.keyCode >= 48 && event.keyCode <= 90) {
@@ -65,24 +80,20 @@ import Content from "./index.js"
             console.log(this.state.bad)
             return
         }
-        if (event.target.value.trim().length === 1 && event.keyCode === 8){
+        if (event.keyCode === 8 || event.keyCode === 32 || event.keyCode === 46) {
+            const selectedText = window.getSelection().toString();
             
-            this.setState({
-                bad: this.state.bad.slice(0, this.state.bad.length - 1)
-            })
-        }
-        // if(event.target.value.length===0){
-            
-        //     this.setState({
-        //         isSelectedInput: Number(event.target.id)-1
-                
-        //     })
-        // } 
+            if (
+                event.target.value.trim().length === 1
+                || (selectedText && selectedText.length === event.target.value.length)  
+            ){
+                this.setState({
+                    bad: this.state.bad.slice(0, this.state.bad.length - 1)
+                })
+            }
+        }    
+        
     }
-
-
-
-
 
     render(){
         return(           
@@ -94,10 +105,12 @@ import Content from "./index.js"
                                 label={val.label}
                                 key={val.id}
                                 id={val.id}
+                                isBadSelectedInput={this.state.BadIsSelectedInput}
+                                getSelectedTextCut={this.getSelectedTextCut}
                                 //handleChange={this.handleChange}
                                 BadIsSelectedInput={this.state.BadIsSelectedInput === val.id}
                                 onKeyDownHandler={this.onKeyDownHandler}
-                                onFocusHandler={this.onFocusHandler}
+                                //onFocusHandler={this.onFocusHandler}
                                 //onCutHandler={this.onCutHandler}
                             />))        
                     }
