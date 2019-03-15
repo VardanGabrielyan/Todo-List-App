@@ -13,8 +13,6 @@ import HTML5Backend from 'react-dnd-html5-backend';
         this.state = {
             BadIsSelectedInput: 1,
             bad: [{id: 1 }]
-            
-           
         };
     }
 

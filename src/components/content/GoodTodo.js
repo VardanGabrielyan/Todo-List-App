@@ -9,8 +9,6 @@ import { connect } from "net";
 import { DragSource } from 'react-dnd';
 
 
-
-
     class GoodTodo extends React.Component{
     
     constructor(props){
@@ -21,30 +19,7 @@ import { DragSource } from 'react-dnd';
             
         };
     }
-
-    // const goodSource = {
-    //     beginDrag(props){
-    //         return {};
-    //     }
-    // }
-
-    // collect = (connect, monitor) =>{
-    //     return{
-    //         connectDragSource: connect.dragSource(),
-    //         isDragging: monitor.isDragging()
-    //     }
-    // }
-    // goodInput = ({connectDragSource, isDragging}){
-    //     return connectDragSource(
-    //         <div style={{
-    //             opacity: isDragging ? 0.5 : 1,
-    //             fontSize: 25,
-    //             fontWeight: 'bold',
-    //             cursor: 'move'
-    //         }}>
-    //         </div>
-    //     )
-    // }
+    
 
     _currentId = 1;
         get currentId() {
@@ -127,6 +102,8 @@ import { DragSource } from 'react-dnd';
         return(           
             
                 <td className="tableStyle" valign="top">
+                <div>
+                <goodInput/>
                     {
                         this.state.good.map(val => (
                             <TableInput 
@@ -141,10 +118,11 @@ import { DragSource } from 'react-dnd';
                                 //onCutHandler={this.onCutHandler}
                             />))        
                     }
+                     </div>
                 </td>
-                
-            
-            )
+
+               
+             )
         }
     }
     export default GoodTodo
