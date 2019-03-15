@@ -39,9 +39,6 @@ import HTML5Backend from 'react-dnd-html5-backend';
         
         }
 
-
-
-
         addLabel = (type) =>  {
             switch (type) {
                 case 'bad':

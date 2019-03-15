@@ -5,7 +5,7 @@ import Content from "./index.js"
 import { DragDropContextProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { connect } from "net";
-import { ItemTypes } from './Constants';
+// import { ItemTypes } from './Constants';
 import { DragSource } from 'react-dnd';
 
 
@@ -28,23 +28,23 @@ import { DragSource } from 'react-dnd';
     //     }
     // }
 
-    collect = (connect, monitor) =>{
-        return{
-            connectDragSource: connect.dragSource(),
-            isDragging: monitor.isDragging()
-        }
-    }
-    goodInput = ({connectDragSource, isDragging}){
-        return connectDragSource(
-            <div style={{
-                opacity: isDragging ? 0.5 : 1,
-                fontSize: 25,
-                fontWeight: 'bold',
-                cursor: 'move'
-            }}>
-            </div>
-        )
-    }
+    // collect = (connect, monitor) =>{
+    //     return{
+    //         connectDragSource: connect.dragSource(),
+    //         isDragging: monitor.isDragging()
+    //     }
+    // }
+    // goodInput = ({connectDragSource, isDragging}){
+    //     return connectDragSource(
+    //         <div style={{
+    //             opacity: isDragging ? 0.5 : 1,
+    //             fontSize: 25,
+    //             fontWeight: 'bold',
+    //             cursor: 'move'
+    //         }}>
+    //         </div>
+    //     )
+    // }
 
     _currentId = 1;
         get currentId() {
