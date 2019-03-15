@@ -2,6 +2,9 @@ import React from "react";
 import './styles.css';
 import GoodTodo from "../GoodTodo.js"
 import BadTodo from "../BadTodo.js"
+import { DragDropContextProvider } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+
 
  class TableInput extends React.Component {
        
@@ -32,10 +35,11 @@ import BadTodo from "../BadTodo.js"
                     ref={this.inputRef}
                     key={this.props.key}
                     value={this.props.value} 
-                    //autoFocus={this.props.BadIsSelectedInput === this.props.id}
                     id={this.props.id}
                     onKeyDown={this.props.onKeyDownHandler}
                     onCut={this.props.getSelectedTextCut}
+                    onClick={this.props.onClickListener}
+                    //autoFocus={this.props.BadIsSelectedInput === this.props.id}
                     //onChange={this.props.getSelectedTextRemoved}
                     //onFocus={this.props.onFocusHandler}
                  />

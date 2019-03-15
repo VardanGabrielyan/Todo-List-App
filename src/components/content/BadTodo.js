@@ -2,6 +2,9 @@ import React from "react";
 import  "./styles.css"
 import TableInput from "./tableInput";
 import Content from "./index.js"
+import { DragDropContextProvider } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+
 
     class BadTodo extends React.Component{
     
