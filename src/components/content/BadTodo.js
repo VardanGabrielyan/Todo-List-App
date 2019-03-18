@@ -2,8 +2,10 @@ import React from "react";
 import  "./styles.css"
 import TableInput from "./tableInput";
 import Content from "./index.js"
-import { DragDropContextProvider } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import { DragSource } from 'react-dnd';
+import { DropTarget } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend'
+import { DragDropContext } from 'react-dnd'
 
 
     class BadTodo extends React.Component{

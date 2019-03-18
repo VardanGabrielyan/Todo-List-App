@@ -2,9 +2,10 @@ import React from "react";
 import './styles.css';
 import GoodTodo from "../GoodTodo.js"
 import BadTodo from "../BadTodo.js"
-import { DragDropContextProvider } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
-
+import { DragSource } from 'react-dnd';
+import { DropTarget } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend'
+import { DragDropContext } from 'react-dnd'
 
  class TableInput extends React.Component {
        
@@ -27,8 +28,9 @@ import HTML5Backend from 'react-dnd-html5-backend';
     inputRef = input => this.inp = input; 
     
     render(){
-       
-        return(
+       // const { connectDropTarget } = this.props
+        
+        return (
 
             <div >
                 <input 
@@ -49,4 +51,4 @@ import HTML5Backend from 'react-dnd-html5-backend';
         )
     }
 }
-export default TableInput;
+export default TableInput ;
