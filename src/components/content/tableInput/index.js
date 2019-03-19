@@ -29,9 +29,19 @@ import { DragDropContext } from 'react-dnd'
     
     render(){
        // const { connectDropTarget } = this.props
-        
-        return (
+        const{
+            text,
+            isDragging,
+            connectDragSource,
+			connectDropTarget
+        } = this.props
 
+        const opacity = isDragging ? 0 : 1
+
+
+        return( 
+            
+                
             <div >
                 <input 
                     ref={this.inputRef}

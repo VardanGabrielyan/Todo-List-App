@@ -8,10 +8,15 @@ import { DropTarget } from 'react-dnd';
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend';
 import { connect } from "net";
+import _ from 'lodash';
+import flow from 'lodash/flow'
 // import { ItemTypes } from './Constants';
 
+const ItemTypes = {
+    GOOD: 'good'
+}
 
-    class GoodTodo extends React.Component{
+class GoodTodo extends React.Component{
     
     constructor(props){
         super(props)
@@ -21,49 +26,21 @@ import { connect } from "net";
             
         };
     }
-    
-     todoSource ={
-        beginDrag(props){
-            return{
-                id: props.id,
-                originalIndex: props.findGood(props.id).index
-            }
-        },
-        endDrag(props, monitor){
-            const{id:droppedId, originalIndex}= monitor.getItem(
-            const didDrop = monitor.didDrop()
 
-            if(!didDrop){
-                props.moveGood(droppedId, originalIndex)
-            }
-        }
-    }
+ 
     
-    goodTarget = {
-        canDrop(){
-            return false
-        },
-        hover(props, monitor){
-            const {id: draggedId} = monitor.getItem()
-            const {id: overId} = props
-            
-            if(draggedId !== overId){
-                const {index: overIndex} = props.findGood(overId)
-                props.moveGood(draggedId, overIndex)
-            }
-        }
-    }
+   
 
- cardCollect = (connect, monitor) => {
-  return {
-    // Call this function inside render()
-    // to let React DnD handle the drag events:
-	  connectDropTarget: connect.dropTarget(),
-  };
+ 
+
+Good = ({connectDragSource,isDragging}) =>{
+    return connectDragSource(
+
+    )
 }
 
 
-goodSourceCollect(connect, monitor) {
+goodSourceCollect = (connect, monitor) => {
     return {
       // Call this function inside render()
       // to let React DnD handle the drag events:
@@ -73,12 +50,23 @@ goodSourceCollect(connect, monitor) {
   }
 
 
- DragDropCard = _.flow(
-  DragSource(Types.CARD, cardSource, cardSourceCollect),
-  DropTarget(Types.CARD, cardTarget, cardCollect)
-)(Card);
+//  DragDropCard = _.flow(
+//   DragSource(Types, goodSource, goodSourceCollect),
+//   DropTarget(Types, goodTarget, goodCollect)
+// )(TableInput);
 
 
+containerCollect = (connect, monitor) => {
+    return {
+      // Call this function inside render()
+      // to let React DnD handle the drag events:
+        connectDropTarget: connect.dropTarget(),
+    };
+  }
+  
+  containerTarget = {
+	drop() {},
+}
 
     _currentId = 1;
         get currentId() {
@@ -155,9 +143,34 @@ goodSourceCollect(connect, monitor) {
         }    
     }
 
+    findGood(id) {
+        const goods =this.state.good
+    
+		const good = goods.filter(c => c.id === id)[0]
+
+		return {
+			good,
+			index: goods.indexOf(good),
+		}
+    }
+
+    moveGood(id, atIndex) {
+		const {good, index} = this.findCard(id)
+    
+    let newgoods = this.state.good
+    newgoods.splice(index, 1); // removing what you are dragging.
+    newgoods.splice(atIndex, 0, good); // inserting it into hoverIndex.
+    
+		this.setState({
+				good: newgoods
+    })
+	}
+    
+
     render() {
-        const { connectDropTarget } = this.props
-        return connectDropTarget(           
+        const { connectDragSource, connectDropTarget, isDragging } = this.props
+        return connectDragSource(
+            //connectDropTarget(),           
             
                 <td className="tableStyle" valign="top">
                 <div>
@@ -165,7 +178,8 @@ goodSourceCollect(connect, monitor) {
                     {
                         this.state.good.map(val => (
                             <TableInput 
-                                className={dragging}
+                                style={{opacity: isDragging ? 0.5 : 1,
+                                cursor: 'move'}}
                                 draggable="true"
                                 onDragStart={this.dragStart}
                                 onDragOver={this.dragOver}
@@ -188,7 +202,50 @@ goodSourceCollect(connect, monitor) {
              )
         }
     }
-    export default DropTarget () (GoodTodo)
+
+    const goodSource ={
+        beginDrag(props) {
+            return{
+                // id: props.id,
+                // originalIndex: props.findGood(props.id).index
+            }
+        },
+        // const endDrag = (props, monitor) => {
+        //     const{id:droppedId, originalIndex}= monitor.getItem()
+        //     const didDrop = monitor.didDrop()
+
+        //     if(!didDrop){
+        //         props.moveGood(droppedId, originalIndex)
+        //     }
+        // }
+    }
+    
+    function goodCollect(connect, monitor) {
+        return {
+          // Call this function inside render()
+          // to let React DnD handle the drag events:
+          connectDragSource: connect.dragSource(),
+          isDragging: monitor.isDragging()
+            //connectDropTarget: connect.dropTarget(),
+        }
+    }
+
+    const goodTarget = {
+        canDrop(){
+            return false
+        },
+        hover(props, monitor){
+            const {id: draggedId} = monitor.getItem()
+            const {id: overId} = props
+            
+            if(draggedId !== overId){
+                const {index: overIndex} = props.findGood(overId)
+                props.moveGood(draggedId, overIndex)
+            }
+        }
+    }
+
+    export default DragSource(ItemTypes.GOOD, goodSource, goodCollect)(GoodTodo)
 
 
 
