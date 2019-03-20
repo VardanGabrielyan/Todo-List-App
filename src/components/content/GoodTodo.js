@@ -1,6 +1,8 @@
 import React from "react";
 import  "./styles.css"
+import {ItemTypes} from './itemTypes';
 import TableInput from "./tableInput";
+import { PropTypes } from 'prop-types';
 import Content from "./index.js"
 import { DragDropContextProvider } from 'react-dnd';
 import { DragSource } from 'react-dnd';
@@ -12,10 +14,6 @@ import _ from 'lodash';
 import flow from 'lodash/flow'
 // import { ItemTypes } from './Constants';
 
-const ItemTypes = {
-    GOOD: 'good'
-}
-
 class GoodTodo extends React.Component{
     
     constructor(props){
@@ -26,12 +24,6 @@ class GoodTodo extends React.Component{
             
         };
     }
-
- 
-    
-   
-
- 
 
 Good = ({connectDragSource,isDragging}) =>{
     return connectDragSource(
@@ -202,6 +194,10 @@ containerCollect = (connect, monitor) => {
              )
         }
     }
+    GoodTodo.propTypes= {
+        connectDragSource: PropTypes.func.isRequired,
+        isDragging: PropTypes.bool.isRequired
+    }
 
     const goodSource ={
         beginDrag(props) {
@@ -210,14 +206,14 @@ containerCollect = (connect, monitor) => {
                 // originalIndex: props.findGood(props.id).index
             }
         },
-        // const endDrag = (props, monitor) => {
-        //     const{id:droppedId, originalIndex}= monitor.getItem()
-        //     const didDrop = monitor.didDrop()
+        endDrag(props, monitor) {
+            const{id:droppedId, originalIndex}= monitor.getItem()
+            const didDrop = monitor.didDrop()
 
-        //     if(!didDrop){
-        //         props.moveGood(droppedId, originalIndex)
-        //     }
-        // }
+            if(!didDrop){
+                props.moveGood(droppedId, originalIndex)
+            }
+        }
     }
     
     function goodCollect(connect, monitor) {
@@ -230,20 +226,20 @@ containerCollect = (connect, monitor) => {
         }
     }
 
-    const goodTarget = {
-        canDrop(){
-            return false
-        },
-        hover(props, monitor){
-            const {id: draggedId} = monitor.getItem()
-            const {id: overId} = props
+    // const goodTarget = {
+    //     canDrop(){
+    //         return false
+    //     },
+    //     hover(props, monitor){
+    //         const {id: draggedId} = monitor.getItem()
+    //         const {id: overId} = props
             
-            if(draggedId !== overId){
-                const {index: overIndex} = props.findGood(overId)
-                props.moveGood(draggedId, overIndex)
-            }
-        }
-    }
+    //         if(draggedId !== overId){
+    //             const {index: overIndex} = props.findGood(overId)
+    //             props.moveGood(draggedId, overIndex)
+    //         }
+    //     }
+    // }
 
     export default DragSource(ItemTypes.GOOD, goodSource, goodCollect)(GoodTodo)
 

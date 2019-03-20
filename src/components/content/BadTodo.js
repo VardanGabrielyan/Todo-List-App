@@ -1,11 +1,13 @@
 import React from "react";
 import  "./styles.css"
 import TableInput from "./tableInput";
+import { PropTypes } from 'prop-types';
 import Content from "./index.js"
 import { DragSource } from 'react-dnd';
 import { DropTarget } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend'
 import { DragDropContext } from 'react-dnd'
+import { ItemTypes } from "./itemTypes";
 
 
     class BadTodo extends React.Component{
@@ -96,6 +98,7 @@ import { DragDropContext } from 'react-dnd'
     }
 
     render(){
+        
         return(           
             
                 <td className="tableStyle" valign="top">
@@ -120,5 +123,25 @@ import { DragDropContext } from 'react-dnd'
             )
         }
     }
-    export default BadTodo
+    BadTodo.propTypes={
+        connectDropTarget: PropTypes.func.isRequired
+    }
+
+const badTarget = {
+    drop(props){
+        return ({
+
+        })
+    }
+}
+
+function badCollect(connect, monitor){
+    return{
+        connectDropTarget: connect.dropTarget(),
+        highlighted: monitor.canDrop()
+    }
+   
+}
+
+    export default DropTarget(ItemTypes.GOOD, badTarget, badCollect)(BadTodo)
 
