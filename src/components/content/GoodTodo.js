@@ -12,7 +12,6 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { connect } from "net";
 import _ from 'lodash';
 import flow from 'lodash/flow'
-// import { ItemTypes } from './Constants';
 
 class GoodTodo extends React.Component{
     
@@ -25,21 +24,15 @@ class GoodTodo extends React.Component{
         };
     }
 
-Good = ({connectDragSource,isDragging}) =>{
-    return connectDragSource(
 
-    )
-}
-
-
-goodSourceCollect = (connect, monitor) => {
-    return {
-      // Call this function inside render()
-      // to let React DnD handle the drag events:
-         connectDragSource: connect.dragSource(),
-      isDragging: monitor.isDragging(),
-    };
-  }
+// goodSourceCollect = (connect, monitor) => {
+//     return {
+//       // Call this function inside render()
+//       // to let React DnD handle the drag events:
+//          connectDragSource: connect.dragSource(),
+//       isDragging: monitor.isDragging(),
+//     };
+//   }
 
 
 //  DragDropCard = _.flow(
@@ -48,13 +41,13 @@ goodSourceCollect = (connect, monitor) => {
 // )(TableInput);
 
 
-containerCollect = (connect, monitor) => {
-    return {
-      // Call this function inside render()
-      // to let React DnD handle the drag events:
-        connectDropTarget: connect.dropTarget(),
-    };
-  }
+// containerCollect = (connect, monitor) => {
+//     return {
+//       // Call this function inside render()
+//       // to let React DnD handle the drag events:
+//         connectDropTarget: connect.dropTarget(),
+//     };
+//   }
   
   containerTarget = {
 	drop() {},
@@ -103,24 +96,31 @@ containerCollect = (connect, monitor) => {
             }
         }
 
+        onMouseClickHandler = event => {
+           
+            if(this.state.GoodIsSelectedInput && event.keyCode===0){
+                this.setState({
+                    GoodIsSelectedInput: this.state.good[this.state.good.length-1].id
+                    
+                })
+                return
+            }
+        }
 
     onKeyDownHandler = event => {
-
         if (!event.target.value.trim().length && event.keyCode >= 48 && event.keyCode <= 90) {
             this.addLabel('good')
             return
         } 
         if (event.keyCode === 13 && event.target.value.length) {    
-            
-            
+
             this.setState({
                 GoodIsSelectedInput: this.state.good[this.state.good.length-1].id
-                
+        
             })
-            
             return
         }
-
+        
         if (event.keyCode === 8 || event.keyCode === 32 || event.keyCode === 46) {
             const selectedText = window.getSelection().toString();
             
@@ -134,36 +134,34 @@ containerCollect = (connect, monitor) => {
             }
         }    
     }
-
-    findGood(id) {
-        const goods =this.state.good
-    
-		const good = goods.filter(c => c.id === id)[0]
-
-		return {
-			good,
-			index: goods.indexOf(good),
-		}
+    onClickHandler = (event) => {        
+        this.setState({
+            GoodIsSelectedInput: event.target.id,
+        })
     }
+    // findGood(id) {
+    //     const goods =this.state.good
+    
+	// 	const good = goods.filter(c => c.id === id)[0]
 
-    moveGood(id, atIndex) {
-		const {good, index} = this.findCard(id)
-    
-    let newgoods = this.state.good
-    newgoods.splice(index, 1); // removing what you are dragging.
-    newgoods.splice(atIndex, 0, good); // inserting it into hoverIndex.
-    
-		this.setState({
-				good: newgoods
-    })
-	}
-    
+	// 	return {
+	// 		good,
+	// 		index: goods.indexOf(good),
+	// 	}
+    // }
 
+    // moveGood(id, atIndex) {
+	// 	const {good, index} = this.findCard(id)
+    
+    // let newgoods = this.state.good
+    // newgoods.splice(index, 1); // removing what you are dragging.
+    // newgoods.splice(atIndex, 0, good); // inserting it into hoverIndex.
+    
     render() {
         const { connectDragSource, connectDropTarget, isDragging } = this.props
         return connectDragSource(
             //connectDropTarget(),           
-            
+        
                 <td className="tableStyle" valign="top">
                 <div>
                 <goodInput/>
@@ -183,6 +181,7 @@ containerCollect = (connect, monitor) => {
                                 id={val.id}
                                 GoodIsSelectedInput={this.state.GoodIsSelectedInput === val.id}
                                 onKeyDownHandler={this.onKeyDownHandler}
+                                onClickHandler={this.onClickHandler}
                                 //onFocusHandler={this.onFocusHandler}
                                 //onCutHandler={this.onCutHandler}
                             />))        
@@ -226,22 +225,23 @@ containerCollect = (connect, monitor) => {
         }
     }
 
-    // const goodTarget = {
-    //     canDrop(){
-    //         return false
-    //     },
-    //     hover(props, monitor){
-    //         const {id: draggedId} = monitor.getItem()
-    //         const {id: overId} = props
+    const goodTarget = {
+        canDrop(){
+            return false
+        },
+        hover(props, monitor){
+            const {id: draggedId} = monitor.getItem()
+            const {id: overId} = props
             
-    //         if(draggedId !== overId){
-    //             const {index: overIndex} = props.findGood(overId)
-    //             props.moveGood(draggedId, overIndex)
-    //         }
-    //     }
-    // }
+            if(draggedId !== overId){
+                const {index: overIndex} = props.findGood(overId)
+                props.moveGood(draggedId, overIndex)
+            }
+        }
+    }
 
     export default DragSource(ItemTypes.GOOD, goodSource, goodCollect)(GoodTodo)
+    
 
 
 

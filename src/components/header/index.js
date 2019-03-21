@@ -5,19 +5,10 @@ import  "../content"
 const Header = () => {
    
     return(
-        
                 <tr>
                     <th>Good</th> 
-                        
                     <th>Bad</th>
-                        
                 </tr>
-
-                
-
-        
-            
             )
-   
 }
 export default Header;

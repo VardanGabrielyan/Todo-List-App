@@ -9,7 +9,6 @@ import { DragDropContext } from 'react-dnd'
 
  class TableInput extends React.Component {
        
-    
     inp = null;
     componentDidMount() {  
         if (this.props.GoodIsSelectedInput) {
@@ -19,29 +18,33 @@ import { DragDropContext } from 'react-dnd'
     componentDidUpdate() {  
         if (this.props.GoodIsSelectedInput) {
             this.inp.focus()        
+            
         };
         if(this.props.BadIsSelectedInput){
             this.inp.focus()
         }
+        // if(event.button===0 && this.props.GoodIsSelectedInput++){
+        //     this.inp.focus()
+
+        // }
     }
 
     inputRef = input => this.inp = input; 
     
     render(){
        // const { connectDropTarget } = this.props
-        const{
-            text,
-            isDragging,
-            connectDragSource,
-			connectDropTarget
-        } = this.props
+        // const{
+        //     text,
+        //     isDragging,
+        //     connectDragSource,
+		// 	connectDropTarget
+        // } = this.props
 
-        const opacity = isDragging ? 0 : 1
+        // const opacity = isDragging ? 0 : 1
 
 
         return( 
-            
-                
+                            
             <div >
                 <input 
                     ref={this.inputRef}
@@ -50,7 +53,7 @@ import { DragDropContext } from 'react-dnd'
                     id={this.props.id}
                     onKeyDown={this.props.onKeyDownHandler}
                     onCut={this.props.getSelectedTextCut}
-                    onClick={this.props.onClickListener}
+                    onClick={this.props.onClickHandler}
                     //autoFocus={this.props.BadIsSelectedInput === this.props.id}
                     //onChange={this.props.getSelectedTextRemoved}
                     //onFocus={this.props.onFocusHandler}

@@ -97,6 +97,12 @@ import { ItemTypes } from "./itemTypes";
         
     }
 
+    onClickHandler = (event) => {        
+        this.setState({
+            BadIsSelectedInput: event.target.id,
+        })
+    }
+
     render(){
         
         return(           
@@ -113,6 +119,7 @@ import { ItemTypes } from "./itemTypes";
                                 //handleChange={this.handleChange}
                                 BadIsSelectedInput={this.state.BadIsSelectedInput === val.id}
                                 onKeyDownHandler={this.onKeyDownHandler}
+                                onClickHandler={this.onClickHandler}
                                 //onFocusHandler={this.onFocusHandler}
                                 //onCutHandler={this.onCutHandler}
                             />))        

@@ -9,34 +9,35 @@ import { DragDropContext } from 'react-dnd'
 
 
 class App extends Component {
-  ItemTypes ={GOODTODO: 'goodToDo'};
+  
 
-  goodSource = {
-      beginDrag(props){
-          return {};
-      }
-  }
+//   goodSource = {
+//       beginDrag(props){
+//           return {};
+//       }
+//   }
 
-  collect = (connect, monitor) =>{
-      return{
-          connectDragSource: connect.dragSource(),
-          isDragging: monitor.isDragging()
-      }
-  }
+//   collect = (connect, monitor) =>{
+//       return{
+//           connectDragSource: connect.dragSource(),
+//           isDragging: monitor.isDragging()
+//       }
+//   }
 
-  goodInput = (connectDragSource, isDragging) => {
-      return connectDragSource(
-          <div style={{
-              opacity: isDragging ? 0.5 : 1,
-              fontSize: 25,
-              fontWeight: 'bold',
-              cursor: 'move'
-          }}>
-          </div>
-      )
-  }
+//   goodInput = (connectDragSource, isDragging) => {
+//       return connectDragSource(
+//           <div style={{
+//               opacity: isDragging ? 0.5 : 1,
+//               fontSize: 25,
+//               fontWeight: 'bold',
+//               cursor: 'move'
+//           }}>
+//           </div>
+//       )
+//   }
 
   render() {
+    
     return (
       <div className="todo-list" >
              
