@@ -96,17 +96,6 @@ class GoodTodo extends React.Component{
             }
         }
 
-        onMouseClickHandler = event => {
-           
-            if(this.state.GoodIsSelectedInput && event.keyCode===0){
-                this.setState({
-                    GoodIsSelectedInput: this.state.good[this.state.good.length-1].id
-                    
-                })
-                return
-            }
-        }
-
     onKeyDownHandler = event => {
         if (!event.target.value.trim().length && event.keyCode >= 48 && event.keyCode <= 90) {
             this.addLabel('good')
