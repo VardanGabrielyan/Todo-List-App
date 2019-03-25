@@ -1,9 +1,9 @@
 import React from "react";
 import  "./styles.css"
+import Content from "./index.js"
 import {ItemTypes} from './itemTypes';
 import TableInput from "./tableInput";
 import { PropTypes } from 'prop-types';
-import Content from "./index.js"
 import { DragDropContextProvider } from 'react-dnd';
 import { DragSource } from 'react-dnd';
 import { DropTarget } from 'react-dnd';
@@ -24,31 +24,6 @@ class GoodTodo extends React.Component{
         };
     }
 
-
-// goodSourceCollect = (connect, monitor) => {
-//     return {
-//       // Call this function inside render()
-//       // to let React DnD handle the drag events:
-//          connectDragSource: connect.dragSource(),
-//       isDragging: monitor.isDragging(),
-//     };
-//   }
-
-
-//  DragDropCard = _.flow(
-//   DragSource(Types, goodSource, goodSourceCollect),
-//   DropTarget(Types, goodTarget, goodCollect)
-// )(TableInput);
-
-
-// containerCollect = (connect, monitor) => {
-//     return {
-//       // Call this function inside render()
-//       // to let React DnD handle the drag events:
-//         connectDropTarget: connect.dropTarget(),
-//     };
-//   }
-  
   containerTarget = {
 	drop() {},
 }
@@ -128,23 +103,7 @@ class GoodTodo extends React.Component{
             GoodIsSelectedInput: event.target.id,
         })
     }
-    // findGood(id) {
-    //     const goods =this.state.good
     
-	// 	const good = goods.filter(c => c.id === id)[0]
-
-	// 	return {
-	// 		good,
-	// 		index: goods.indexOf(good),
-	// 	}
-    // }
-
-    // moveGood(id, atIndex) {
-	// 	const {good, index} = this.findCard(id)
-    
-    // let newgoods = this.state.good
-    // newgoods.splice(index, 1); // removing what you are dragging.
-    // newgoods.splice(atIndex, 0, good); // inserting it into hoverIndex.
     
     render() {
         const { connectDragSource, connectDropTarget, isDragging } = this.props
@@ -153,26 +112,26 @@ class GoodTodo extends React.Component{
         
                 <td className="tableStyle" valign="top">
                 <div>
-                <goodInput/>
+                
                     {
                         this.state.good.map(val => (
-                            <TableInput 
-                                style={{opacity: isDragging ? 0.5 : 1,
-                                cursor: 'move'}}
-                                draggable="true"
-                                onDragStart={this.dragStart}
-                                onDragOver={this.dragOver}
-                                onDragEnd={this.dragEnd}
-                                getSelectedTextCut={this.getSelectedTextCut}
+                            <TableInput
+                                type="good" 
+                                // style={{opacity: isDragging ? 0.5 : 1,
+                                // cursor: 'move'}}
+                                // draggable="true"
+                                // onDragStart={this.dragStart}
+                                // onDragOver={this.dragOver}
+                                // onDragEnd={this.dragEnd}
+                                //  getSelectedTextCut={this.getSelectedTextCut}
                                 isGoodSelectedInput={this.state.GoodIsSelectedInput}
-                                label={val.label}
-                                key={val.id}
-                                id={val.id}
+                                //  label={val.label}
+                                //  key={val.id}
+                                //  id={val.id}
                                 GoodIsSelectedInput={this.state.GoodIsSelectedInput === val.id}
-                                onKeyDownHandler={this.onKeyDownHandler}
-                                onClickHandler={this.onClickHandler}
-                                //onFocusHandler={this.onFocusHandler}
-                                //onCutHandler={this.onCutHandler}
+                                //onKeyDownHandler={this.onKeyDownHandler}
+                                //onClickHandler={this.onClickHandler}
+                                                                
                             />))        
                     }
                      </div>

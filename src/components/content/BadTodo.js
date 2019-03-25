@@ -111,17 +111,15 @@ import { ItemTypes } from "./itemTypes";
                     {
                         this.state.bad.map(val => (
                             <TableInput
+                                type="bad"
                                 label={val.label}
                                 key={val.id}
                                 id={val.id}
                                 isBadSelectedInput={this.state.BadIsSelectedInput}
                                 getSelectedTextCut={this.getSelectedTextCut}
-                                //handleChange={this.handleChange}
                                 BadIsSelectedInput={this.state.BadIsSelectedInput === val.id}
                                 onKeyDownHandler={this.onKeyDownHandler}
                                 onClickHandler={this.onClickHandler}
-                                //onFocusHandler={this.onFocusHandler}
-                                //onCutHandler={this.onCutHandler}
                             />))        
                     }
                 </td>

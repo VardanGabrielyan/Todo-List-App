@@ -2,13 +2,20 @@ import React from "react";
 import './styles.css';
 import GoodTodo from "../GoodTodo.js"
 import BadTodo from "../BadTodo.js"
+import Content from "../index.js"
 import { DragSource } from 'react-dnd';
 import { DropTarget } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend'
 import { DragDropContext } from 'react-dnd'
 
  class TableInput extends React.Component {
+    
+    constructor(props){
+        super(props)
        
+    }   
+
+
     inp = null;
     componentDidMount() {  
         if (this.props.GoodIsSelectedInput) {

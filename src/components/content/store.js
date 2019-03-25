@@ -13,12 +13,7 @@ const TodoStore = WrappedComponent =>{
 
         render(){
             return(
-                <TodoStoreContext.Provider value={{
-                    state: this.state,
-                    updateTodo: (value) =>{
-                        this.setState({})
-                    }
-                }}
+                
             )
         }
     }

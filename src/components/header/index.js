@@ -6,8 +6,8 @@ const Header = () => {
    
     return(
                 <tr>
-                    <th>Good</th> 
-                    <th>Bad</th>
+                    <th bgcolor="#33cc33">Good</th>
+                    <th bgcolor="#ff3300">Bad</th>
                 </tr>
             )
 }
