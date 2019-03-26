@@ -19,6 +19,7 @@ class GoodTodo extends React.Component{
         super(props)
         this.state = {
             GoodIsSelectedInput: 1,
+            GoodChecked: false,
             good: [{id: 1 }]
             
         };

@@ -111,12 +111,14 @@ render(){
                     onKeyDown={this.onKeyDownHandler}
                     onClick={this.onClickHandler} 
                      />
+                      {this.addTodo()}  
             </td>
      
             <td valign="top">    
-                <BadTodo type="bad"/>
+                <BadTodo type="good"/>
+                {this.addTodo()}  
             </td>
-          {this.addTodo()}    
+           
         </tr>
         )
     }

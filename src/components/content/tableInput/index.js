@@ -39,6 +39,7 @@ import { DragDropContext } from 'react-dnd'
     inputRef = input => this.inp = input; 
     
     render(){
+         
        // const { connectDropTarget } = this.props
         // const{
         //     text,
@@ -51,21 +52,23 @@ import { DragDropContext } from 'react-dnd'
 
 
         return( 
-                            
+            
             <div >
-                <input 
+                <input
+                    className="checkbox"
                     ref={this.inputRef}
-                    key={this.props.key}
-                    value={this.props.value} 
-                    id={this.props.id}
+                    //key={this.props.key}
+                    //value={this.props.value} 
+                    //id={this.props.id}
                     onKeyDown={this.props.onKeyDownHandler}
                     onCut={this.props.getSelectedTextCut}
                     onClick={this.props.onClickHandler}
                     //autoFocus={this.props.BadIsSelectedInput === this.props.id}
                     //onChange={this.props.getSelectedTextRemoved}
                     //onFocus={this.props.onFocusHandler}
+                    //{this.props.check}
                  />
-                <input type="checkbox"/>
+                <input type="checkbox" onChange={this.props.handleCheck} />
                 
             </div>
         )

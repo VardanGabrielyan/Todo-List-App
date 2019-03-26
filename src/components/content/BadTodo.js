@@ -9,13 +9,14 @@ import HTML5Backend from 'react-dnd-html5-backend'
 import { DragDropContext } from 'react-dnd'
 import { ItemTypes } from "./itemTypes";
 
-
+const check=()=>{return <TableInput className="checkbox"/>}
     class BadTodo extends React.Component{
     
     constructor(props){
         super(props)
         this.state = {
             BadIsSelectedInput: 1,
+            BadChecked: false,
             bad: [{id: 1 }]
         };
     }
@@ -102,24 +103,54 @@ import { ItemTypes } from "./itemTypes";
             BadIsSelectedInput: event.target.id,
         })
     }
+    style={
+        textDecoration: 
+    }
+    item=('Item', function({item}))
+    onChecked=()=>{
+        this.setState({
+        })
+    }
+
+    handleCheck=()=>{
+        this.setState({
+            BadChecked: !this.state.BadChecked
+        })
+            check()
+    
+        
+        // if(!event.target.value.trim().length && event.keyCode >= 48 && event.keyCode <= 90){
+        //   return  <TableInput className="checkbox"/>
+        // }
+    }
+
+    // handleInputOnCheck=(event)=>{
+       
+    // }
+
 
     render(){
+           // let check= this.state.BadChecked ? <TableInput className="checkbox"/> : <TableInput/>;
         
         return(           
             
                 <td className="tableStyle" valign="top">
                     {
                         this.state.bad.map(val => (
+                            
                             <TableInput
-                                type="bad"
-                                label={val.label}
-                                key={val.id}
-                                id={val.id}
+                                
+                                //type="bad"
+                                //label={val.label}
+                                //key={val.id}
+                                //id={val.id}
                                 isBadSelectedInput={this.state.BadIsSelectedInput}
                                 getSelectedTextCut={this.getSelectedTextCut}
                                 BadIsSelectedInput={this.state.BadIsSelectedInput === val.id}
                                 onKeyDownHandler={this.onKeyDownHandler}
                                 onClickHandler={this.onClickHandler}
+                                handleCheck={this.handleCheck}
+                               // check={this.check}
                             />))        
                     }
                 </td>
@@ -128,11 +159,11 @@ import { ItemTypes } from "./itemTypes";
             )
         }
     }
-    BadTodo.propTypes={
+    { BadTodo.propTypes={
         connectDropTarget: PropTypes.func.isRequired
-    }
+    } }
 
-const badTarget = {
+ const badTarget = {
     drop(props){
         return ({
 
@@ -146,7 +177,7 @@ function badCollect(connect, monitor){
         highlighted: monitor.canDrop()
     }
    
-}
+} 
 
     export default DropTarget(ItemTypes.GOOD, badTarget, badCollect)(BadTodo)
 
