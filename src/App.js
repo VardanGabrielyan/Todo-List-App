@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import Header from "./components/header"
 import Content from "./components/content"
 import  "./styles/styles.css"
-import { DragSource } from 'react-dnd';
-import { DropTarget } from 'react-dnd';
+// import { DragSource } from 'react-dnd';
+// import { DropTarget } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend'
 import { DragDropContext } from 'react-dnd'
 

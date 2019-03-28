@@ -1,43 +1,39 @@
 import React from "react";
 import './styles.css';
-import GoodTodo from "../GoodTodo.js"
-import BadTodo from "../BadTodo.js"
-import Content from "../index.js"
-import { DragSource } from 'react-dnd';
-import { DropTarget } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend'
-import { DragDropContext } from 'react-dnd'
+// import GoodTodo from "../GoodTodo.js"
+// import BadTodo from "../BadTodo.js"
+ import Content from "../index.js"
+// import { DragSource } from 'react-dnd';
+// import { DropTarget } from 'react-dnd';
+// import HTML5Backend from 'react-dnd-html5-backend'
+// import { DragDropContext } from 'react-dnd'
+import Todo from "../Todo.js"
 
  class TableInput extends React.Component {
     
-    constructor(props){
-        super(props)
-       
-    }   
-
-
     inp = null;
-    componentDidMount() {  
-        if (this.props.GoodIsSelectedInput) {
-            this.inp.focus()        
-        };
-    }
-    componentDidUpdate() {  
-        if (this.props.GoodIsSelectedInput) {
-            this.inp.focus()        
+    // componentDidMount() {  
+    //     if (this.props.GoodIsSelectedInput) {
+    //         this.inp.focus()        
+    //     };
+        
+    // }
+    // componentDidUpdate() {  
+    //     if (this.props.GoodIsSelectedInput) {
+    //         this.inp.focus()        
             
-        };
-        if(this.props.BadIsSelectedInput){
-            this.inp.focus()
-        }
-        // if(event.button===0 && this.props.GoodIsSelectedInput++){
-        //     this.inp.focus()
+    //     };
+    //     if(this.props.BadIsSelectedInput){
+    //         this.inp.focus()
+    //     }
+    //     if(event.button===0 && this.props.GoodIsSelectedInput++){
+    //         this.inp.focus()
 
-        // }
-    }
+    //     }
+    // }
 
     inputRef = input => this.inp = input; 
-    
+
     render(){
          
        // const { connectDropTarget } = this.props
@@ -55,20 +51,20 @@ import { DragDropContext } from 'react-dnd'
             
             <div >
                 <input
-                    className="checkbox"
                     ref={this.inputRef}
                     //key={this.props.key}
                     //value={this.props.value} 
                     //id={this.props.id}
                     onKeyDown={this.props.onKeyDownHandler}
-                    onCut={this.props.getSelectedTextCut}
-                    onClick={this.props.onClickHandler}
+                    //onCut={this.props.getSelectedTextCut}
+                    //onClick={this.props.onClickHandler}
                     //autoFocus={this.props.BadIsSelectedInput === this.props.id}
                     //onChange={this.props.getSelectedTextRemoved}
                     //onFocus={this.props.onFocusHandler}
                     //{this.props.check}
                  />
-                <input type="checkbox" onChange={this.props.handleCheck} />
+                <input type="checkbox" //onChange={this.props.handleCheck}
+                 />
                 
             </div>
         )
