@@ -1,7 +1,7 @@
 import React from "react";
 import  "./styles.css"
 import TableInput from "./tableInput";
-// import Content from "./index.js"
+import Content from "./index.js"
 // import {ItemTypes} from './itemTypes';
 // import { PropTypes } from 'prop-types';
 // import { DragDropContextProvider } from 'react-dnd';
@@ -15,10 +15,20 @@ import TableInput from "./tableInput";
 
 class Todo extends React.Component   {
         
-    _currentId = 1;
-        get currentId() {
-        return ++this._currentId;    
-    }   
+    // constructor(props){
+    //     super(props)
+    //     this.state = {
+    //         GoodIsSelectedInput: 1,
+    //         GoodChecked: false,
+    //         BadIsSelectedInput: 2,
+    //         BadChecked: false
+    //     };
+    // }
+
+    // _currentId = 1;
+    //     get currentId() {
+    //     return ++this._currentId;    
+    // }   
 
     // getSelectedTextCut = type => props =>{
     //     const selectedText = window.getSelection().toString();
@@ -37,45 +47,64 @@ class Todo extends React.Component   {
     
     // }
 
-    onKeyDownHandler = event => {
-        console.log(type);
+    // onKeyDownHandler = type => (event) => {
         
-        if (!event.target.value.trim().length && event.keyCode >= 48 && event.keyCode <= 90) {
-            this.props.addLabel(this.props.data)
-            return
-        } 
-        if (event.keyCode === 13 && event.target.value.length) {    
-
-            this.setState({
-                GoodIsSelectedInput: this.event[this.props.data][this.event[this.props.data].length-1].id
-                
-            })
-            return
-        }
+    //     if (!event.target.value.trim().length && event.keyCode >= 48 && event.keyCode <= 90) {
+    //         this.props.addLabel(this.props.data)
+    //         return
+    //     } 
+    //     if (event.keyCode === 13 && event.target.value.length) {    
+    //         switch (type) {
+    //             case 'good':
+                                         
+    //                 this.setState({
+    //                     GoodIsSelectedInput: this.event[this.props.data][this.event[this.props.data].length-1].id
+    //                 });
+    //                 break;
+    //             case 'bad':
+    //                 this.setState({
+    //                     BadIsSelectedInput: this.event[this.props.data][this.event[this.props.data].length-1].id
+    //         });
+    //                 break;
+    //             default:
+    //                 break;
+    //         }
+            
+    //     }
         
-        if (event.keyCode === 8 || event.keyCode === 32 || event.keyCode === 46) {
-            const selectedText = window.getSelection().toString();
+    //     if (event.keyCode === 8 || event.keyCode === 32 || event.keyCode === 46) {
+    //         const selectedText = window.getSelection().toString();
             
-            if (
-                event.target.value.trim().length === 1
-                || (selectedText && selectedText.length === event.target.value.length)  
-            ){
-                this.event.setState({
-                    [type]: this.event[type].slice(0, this.event[type].length - 1)
-                })
-            }
-        }    
-    }
-    onClickHandler = event => {        
-        this.setState({
-            GoodIsSelectedInput: event.target.id
-            
-        })
-    }
+    //         if (
+    //             event.target.value.trim().length === 1
+    //             || (selectedText && selectedText.length === event.target.value.length)  
+    //         ){
+    //             this.event.setState({
+    //                 [type]: this.event[type].slice(0, this.event[type].length - 1)
+    //             })
+    //         }
+    //     }   } 
+    
+    // onClickHandler = (event,type) => {        
+    //     switch (type) {
+    //         case 'good':
+                                     
+    //             this.setState({
+    //                 GoodIsSelectedInput: event.target.id
+    //             });
+    //             break;
+    //         case 'bad':
+    //             this.setState({
+    //                 BadIsSelectedInput: event.target.id
+    //     });
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    // }
 
     render(){
-        console.log('props', this.props);
-        
+                
         return(
 
             <td className="tableStyle" valign="top">
@@ -90,14 +119,13 @@ class Todo extends React.Component   {
                             // onDragStart={this.dragStart}
                             // onDragOver={this.dragOver}
                             // onDragEnd={this.dragEnd}
-                            //label={val.label}
-                            //key={val.id}
-                            //id={val.id}
+                            key={val.id}
+                            id={val.id}
                             //onCut={this.getSelectedTextCut}
-                            //BadIsSelectedInput={this.props.BadIsSelectedInput === val.id}
-                            //GoodIsSelectedInput={this.props.GoodIsSelectedInput === val.id}
-                            onKeyDownHandler={this.props.addLabel}
-                            //onClickHandler={this.onClickHandler}
+                            GoodIsSelectedInput={this.props.GoodIsSelectedInput === val.id}
+                            BadIsSelectedInput={this.props.BadIsSelectedInput === val.id}
+                            onKeyDownHandler={this.props.onKeyDownHandler}
+                            onClickHandler={this.props.onClickHandler}
                             //addLabel={this.props.addLabel}   
                         />))        
                 }

@@ -9,30 +9,31 @@ import './styles.css';
 // import { DragDropContext } from 'react-dnd'
 import Todo from "../Todo.js"
 
+
  class TableInput extends React.Component {
     
     inp = null;
-    // componentDidMount() {  
-    //     if (this.props.GoodIsSelectedInput) {
-    //         this.inp.focus()        
-    //     };
+    componentDidMount() {  
+        console.log(this.props.GoodIsSelectedInput)
+        if (this.props.GoodIsSelectedInput) {
+            this.inp.focus()        
+        };
         
-    // }
-    // componentDidUpdate() {  
-    //     if (this.props.GoodIsSelectedInput) {
-    //         this.inp.focus()        
-            
-    //     };
-    //     if(this.props.BadIsSelectedInput){
-    //         this.inp.focus()
-    //     }
-    //     if(event.button===0 && this.props.GoodIsSelectedInput++){
-    //         this.inp.focus()
+    }
+    componentDidUpdate() {  
+        
+        if (this.props.GoodIsSelectedInput) {
+            this.inp.focus()        
+            console.log("good",this.props.GoodIsSelectedInput)
 
-    //     }
-    // }
+        };
+        if(this.props.BadIsSelectedInput){
+            this.inp.focus()
+            console.log('bad',this.props.BadIsSelectedInput)
+        }
+    }
 
-    inputRef = input => this.inp = input; 
+     inputRef = input => this.inp = input; 
 
     render(){
          
@@ -52,13 +53,13 @@ import Todo from "../Todo.js"
             <div >
                 <input
                     ref={this.inputRef}
-                    //key={this.props.key}
+                    key={this.props.key}
                     //value={this.props.value} 
-                    //id={this.props.id}
+                    id={this.props.id}
                     onKeyDown={this.props.onKeyDownHandler}
                     //onCut={this.props.getSelectedTextCut}
-                    //onClick={this.props.onClickHandler}
-                    //autoFocus={this.props.BadIsSelectedInput === this.props.id}
+                    onClick={this.props.onClickHandler}
+                    autoFocus={this.props.GoodIsSelectedInput}
                     //onChange={this.props.getSelectedTextRemoved}
                     //onFocus={this.props.onFocusHandler}
                     //{this.props.check}
