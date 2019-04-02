@@ -15,20 +15,7 @@ import Content from "./index.js"
 
 class Todo extends React.Component   {
         
-    // constructor(props){
-    //     super(props)
-    //     this.state = {
-    //         GoodIsSelectedInput: 1,
-    //         GoodChecked: false,
-    //         BadIsSelectedInput: 2,
-    //         BadChecked: false
-    //     };
-    // }
-
-    // _currentId = 1;
-    //     get currentId() {
-    //     return ++this._currentId;    
-    // }   
+ 
 
     // getSelectedTextCut = type => props =>{
     //     const selectedText = window.getSelection().toString();
@@ -104,35 +91,38 @@ class Todo extends React.Component   {
     // }
 
     render(){
-                
-        return(
+        const { style, checked, GoodIsSelectedInput, BadIsSelectedInput, onCheckHandler, onClickHandler, onKeyDownHandler, className, checkBoxClickHandler } = this.props;
+        
+            return(
+                <td className="tableStyle" valign="top">
+                    <div>
+                    {   this.props.data.map(val => (
+                            <TableInput
+                                // style={{opacity: isDragging ? 0.5 : 1,
+                                // cursor: 'move'}}
+                                // draggable="true"
+                                // onDragStart={this.dragStart}
+                                // onDragOver={this.dragOver}
+                                // onDragEnd={this.dragEnd}
+                                id={val.id}
+                                key={val.id}
+                                style={style}   
+                                checked={checked}
+                                className={className}
+                                onClickHandler={onClickHandler}
+                                onCheckHandler={onCheckHandler}
+                                onKeyDownHandler={onKeyDownHandler}
+                                BadIsSelectedInput={BadIsSelectedInput === val.id}
+                                GoodIsSelectedInput={GoodIsSelectedInput === val.id}
+                                checkBoxClickHandler={checkBoxClickHandler}
+                                //addLabel={this.props.addLabel}
+                                onCut={this.props.getSelectedTextCut}
 
-            <td className="tableStyle" valign="top">
-            <div>
-            
-                {
-                    this.props.data.map(val => (
-                        <TableInput
-                            // style={{opacity: isDragging ? 0.5 : 1,
-                            // cursor: 'move'}}
-                            // draggable="true"
-                            // onDragStart={this.dragStart}
-                            // onDragOver={this.dragOver}
-                            // onDragEnd={this.dragEnd}
-                            key={val.id}
-                            id={val.id}
-                            //onCut={this.getSelectedTextCut}
-                            GoodIsSelectedInput={this.props.GoodIsSelectedInput === val.id}
-                            BadIsSelectedInput={this.props.BadIsSelectedInput === val.id}
-                            onKeyDownHandler={this.props.onKeyDownHandler}
-                            onClickHandler={this.props.onClickHandler}
-                            //addLabel={this.props.addLabel}   
-                        />))        
-                }
-                 </div>
-            </td>
-
-        )
+                                />))        
+                    }
+                    </div>
+                </td>
+            )
     }
 }
 export default Todo;
