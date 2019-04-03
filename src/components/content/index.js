@@ -50,7 +50,7 @@ export class Content extends React.Component  {
         //     }
     }
 
-    getSelectedTextCut = event =>{
+    getSelectedTextCut = (type) => (event) =>{
                   const selectedText = window.getSelection().toString();
                   function func(){
                       return false
@@ -58,10 +58,22 @@ export class Content extends React.Component  {
                   event.oncut= function(){ func()}
                   const cut = event.oncut;
                   if(cut && selectedText && selectedText.length === event.target.value.length)  {
-                     
-                      this.setState({
-                          good: this.state.good.slice(0, this.state.good.length - 1,selectedText.length)
-                      })
+                    console.log('aaa',this.state.good)
+
+                    switch (type) {
+                        case 'good':
+                            this.setState({
+                                good: this.state.good.slice(0, this.state.good.length - 1)
+                            })
+                            break;
+                        case 'bad':
+                            this.setState({
+                                bad: this.state.bad.slice(0, this.state.bad.length - 1,selectedText.length)
+                            });
+                            break;
+                        default:
+                            break;
+                    }
                   } 
               
                }
@@ -112,7 +124,7 @@ export class Content extends React.Component  {
             }
         } 
     }
-    checkBoxClickHandler
+    //checkBoxClickHandler
 
     onClickHandler = (type) => (event) => {     
         switch (type) {
@@ -173,6 +185,7 @@ export class Content extends React.Component  {
                             checked={this.state.GoodChecked}
                             style={{textDecoration: this.state.strike}}
                             checkBoxClickHandler={this.checkBoxClickHandler}
+                            getSelectedTextCut={this.getSelectedTextCut('good')}
                         />
                     </td>
                     <td valign="top">    
@@ -186,6 +199,7 @@ export class Content extends React.Component  {
                             className={!this.state.BadChecked && 'checkbox'}
                             style={{textDecoration: this.state.strike}}
                             checkBoxClickHandler={this.checkBoxClickHandler}
+                            getSelectedTextCut={this.getSelectedTextCut('bad')}
                         />
                     </td>
                 </tr>

@@ -91,7 +91,7 @@ class Todo extends React.Component   {
     // }
 
     render(){
-        const { style, checked, GoodIsSelectedInput, BadIsSelectedInput, onCheckHandler, onClickHandler, onKeyDownHandler, className, checkBoxClickHandler } = this.props;
+        const { style, checked, GoodIsSelectedInput, BadIsSelectedInput, onCheckHandler, onClickHandler, onKeyDownHandler, className, checkBoxClickHandler, getSelectedTextCut } = this.props;
         
             return(
                 <td className="tableStyle" valign="top">
@@ -116,7 +116,7 @@ class Todo extends React.Component   {
                                 GoodIsSelectedInput={GoodIsSelectedInput === val.id}
                                 checkBoxClickHandler={checkBoxClickHandler}
                                 //addLabel={this.props.addLabel}
-                                onCut={this.props.getSelectedTextCut}
+                                getSelectedTextCut={getSelectedTextCut}
 
                                 />))        
                     }
