@@ -1,5 +1,4 @@
 import React from "react";
-import  "./styles.css"
 import TableInput from "./tableInput";
 //import GoodTodo from "./GoodTodo.js"
 //import BadTodo from "./BadTodo.js"
@@ -12,13 +11,10 @@ export class Content extends React.Component  {
     constructor(props){
         super(props)
         this.state = {
-            good: [{id: 1,}],
+            good: [{id: 1}],
             bad: [{id: 1}],
             GoodIsSelectedInput: 1,
             BadIsSelectedInput: null,
-            GoodChecked: false,
-            BadChecked: false,
-            strike: 'none'
         };
     }
 
@@ -26,64 +22,46 @@ export class Content extends React.Component  {
     get currentId() {
         return ++this._currentId;    
     }  
+   
+    getSelectedTextCut = type => event =>{
 
-    onCheckHandler = type => event => {
-        switch (type) {
-            case 'good':
-                    this.setState({
-                        GoodChecked: !this.state.GoodChecked,
-                        strike: this.state.strike === 'none' ? 'line-through' : 'none'
-                    });
-                break;
-            case 'bad':
-                    this.setState({
-                        BadChecked: !this.state.BadChecked,
-                        strike: this.state.strike === 'none' ? 'line-through' : 'none'
-                    });
-                break;
-            default:
-                break;
-        }
-        
-        // if(this.state.GoodChecked){
-        //     event.target.value=styles
-        //     }
-    }
-
-    getSelectedTextCut = (type) => (event) =>{
                   const selectedText = window.getSelection().toString();
-                  function func(){
-                      return false
-                  }
-                  event.oncut= function(){ func()}
+                  event.oncut = () =>{return false} 
                   const cut = event.oncut;
-                  if(cut && selectedText && selectedText.length === event.target.value.length)  {
-                    console.log('aaa',this.state.good)
 
-                    switch (type) {
-                        case 'good':
-                            this.setState({
-                                good: this.state.good.slice(0, this.state.good.length - 1)
-                            })
-                            break;
-                        case 'bad':
-                            this.setState({
-                                bad: this.state.bad.slice(0, this.state.bad.length - 1,selectedText.length)
-                            });
-                            break;
-                        default:
-                            break;
-                    }
+                  if(cut && selectedText && selectedText.length === event.target.value.length)  {
+                        switch (type) {
+                            case 'good':
+                                this.setState({
+                                    good: this.state.good.slice(0, this.state.good.length - 1)
+                                })
+                                break;
+                            case 'bad':
+                                this.setState({
+                                    bad: this.state.bad.slice(0, this.state.bad.length - 1,selectedText.length)
+                                });
+                                break;
+                            default:
+                                break;
+                        }
                   } 
-              
                }
 
-    onKeyDownHandler = (type) => (event) => {
-        
-        if (!event.target.value.trim().length && event.keyCode >= 48 && event.keyCode <= 90) {
+    onKeyDownHandler = type => event => {
+
+          const keyboardSmallestLetterCode=48;
+          const keyboardLargestLetterCode=90;
+          const enter=13;
+          const backspace=8;
+          const space=32;
+          const del=46;
+          const input = event.target.value;
+          const selectedText = window.getSelection().toString();
+
+        if (!input.trim().length && event.keyCode >= keyboardSmallestLetterCode && event.keyCode <= keyboardLargestLetterCode && !event.ctrlKey) {
             this.addLabel(type)
         } 
-        if (event.keyCode === 13 && event.target.value.length) {    
+        if (event.keyCode === enter && input.length) {    
             switch (type) {
                 case 'good':
                     this.setState({
@@ -101,11 +79,11 @@ export class Content extends React.Component  {
                     break;
             }
         }
-        if (event.keyCode === 8 || event.keyCode === 32 || event.keyCode === 46) {
-            const selectedText = window.getSelection().toString();
+        if (event.keyCode === backspace || event.keyCode === space || event.keyCode === del) {
+            
             if (
-                event.target.value.trim().length === 1
-                || (selectedText && selectedText.length === event.target.value.length)  
+              input.trim().length === 1
+                || (selectedText && selectedText.length === input.length)  
             ){
                 switch (type) {
                     case 'good':
@@ -124,9 +102,9 @@ export class Content extends React.Component  {
             }
         } 
     }
-    //checkBoxClickHandler
 
-    onClickHandler = (type) => (event) => {     
+    onClickHandler = type => event => {  
+      console.log(this.state.GoodIsSelectedInput)   
         switch (type) {
             case 'good':  
                 this.setState({
@@ -173,6 +151,7 @@ export class Content extends React.Component  {
     }
 
     render(){
+      console.log(this.state.strike)
             return(           
                 <tr>
                     <td valign="top">
@@ -181,12 +160,8 @@ export class Content extends React.Component  {
                             GoodIsSelectedInput={this.state.GoodIsSelectedInput}
                             onKeyDownHandler={this.onKeyDownHandler('good')}
                             onClickHandler={this.onClickHandler('good')}
-                            onCheckHandler={this.onCheckHandler('good')}
-                            checked={this.state.GoodChecked}
-                            style={{textDecoration: this.state.strike}}
-                            checkBoxClickHandler={this.checkBoxClickHandler}
                             getSelectedTextCut={this.getSelectedTextCut('good')}
-                        />
+                            />
                     </td>
                     <td valign="top">    
                         <Todo 
@@ -194,16 +169,11 @@ export class Content extends React.Component  {
                             BadIsSelectedInput={this.state.BadIsSelectedInput}
                             onKeyDownHandler={this.onKeyDownHandler('bad')}
                             onClickHandler={this.onClickHandler('bad')}
-                            onCheckHandler={this.onCheckHandler('bad')}
-                            checked={this.state.BadChecked}
-                            className={!this.state.BadChecked && 'checkbox'}
-                            style={{textDecoration: this.state.strike}}
-                            checkBoxClickHandler={this.checkBoxClickHandler}
                             getSelectedTextCut={this.getSelectedTextCut('bad')}
                         />
                     </td>
                 </tr>
-                )
-    }
+                    )
+            }
 }
 export default Content;

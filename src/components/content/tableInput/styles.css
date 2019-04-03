@@ -1,4 +1,8 @@
 .tableStyle  {
     border: '1px solid black';
     cursor: 'move'
-};
+}
+.line-through-table-input {
+    text-decoration: line-through;
+}
+

@@ -8,17 +8,19 @@ import Content from "../index.js"
 // import HTML5Backend from 'react-dnd-html5-backend'
 // import { DragDropContext } from 'react-dnd'
 import Todo from "../Todo.js"
+import { log } from "util";
 
  class TableInput extends React.Component {
     
     inp = null;
+    state={
+        isChecked: false,
+    }
     componentDidMount() {  
-        //console.log(this.props.GoodIsSelectedInput)
         if (this.props.GoodIsSelectedInput) {
             this.inp.focus()        
         };
     }
-
     componentDidUpdate() {  
         if (this.props.GoodIsSelectedInput) {
             this.inp.focus()        
@@ -27,47 +29,28 @@ import Todo from "../Todo.js"
             this.inp.focus()
         }
     }
-
-     inputRef = input => this.inp = input; 
-
-    render(){
-         
-       // const { connectDropTarget } = this.props
-        // const{
-        //     text,
-        //     isDragging,
-        //     connectDragSource,
-		// 	connectDropTarget
-        // } = this.props
-
-        // const opacity = isDragging ? 0 : 1
-        console.log(this.props.className)
-
-        return( 
-                <div >
+    inputRef = input => this.inp = input; 
+    checkHandler = e => this.setState({isChecked: e.target.checked});
+    
+    render() {
+        return ( 
+                <div 
+                    className="line-through">
                     <input
+                        className={this.state.isChecked && "line-through-table-input"}
                         ref={this.inputRef}
-                        //key={this.props.key}
-                        //value={this.props.value} 
-                        //id={this.props.id}
+                        id={this.props.id}
                         onKeyDown={this.props.onKeyDownHandler}
                         onCut={this.props.getSelectedTextCut}
                         onClick={this.props.onClickHandler}
-                        //autoFocus={this.props.GoodIsSelectedInput}
-                        //onChange={this.props.getSelectedTextRemoved}
-                        //onFocus={this.props.onFocusHandler}
-                        //{this.props.check}
-                        style={this.props.style}
-                        className={this.props.className}
                     />
                     <input 
                         onClick={this.props.checkBoxClick}
                         type="checkbox" 
-                        onChange={this.props.onCheckHandler} 
-                        checked={this.props.checked}
+                        onChange={this.checkHandler} 
                     />
                 </div>
-        )
-    }
+                )
+            }
 }
 export default TableInput ;
