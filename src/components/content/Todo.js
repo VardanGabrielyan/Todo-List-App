@@ -1,20 +1,11 @@
 import React from "react";
 import TableInput from "./tableInput";
 import Content from "./index.js"
+import { DragSource } from 'react-dnd';
+import { DropTarget } from 'react-dnd';
 import './styles.css'
-// import {ItemTypes} from './itemTypes';
-// import { PropTypes } from 'prop-types';
-// import { DragDropContextProvider } from 'react-dnd';
-// import { DragSource } from 'react-dnd';
-// import { DropTarget } from 'react-dnd';
-// import { DragDropContext } from 'react-dnd'
-// import HTML5Backend from 'react-dnd-html5-backend';
-// import { connect } from "net";
-// import _ from 'lodash';
-//import flow from 'lodash/flow'
 
 class Todo extends React.Component   {
-        
     render(){
         const { 
             style,
@@ -26,19 +17,22 @@ class Todo extends React.Component   {
             onKeyDownHandler,
             className,
             checkBoxClickHandler,
-            getSelectedTextCut
+            getSelectedTextCut,
                 } = this.props;
         
                 return(
+                        
                     <td 
                         valign="top">
                         <div>
-                            {this.props.data.map(val => (
+                            {this.props.data.map((val, index) => (
                                 <TableInput
                                     // draggable="true"
                                     // onDragStart={this.dragStart}
                                     // onDragOver={this.dragOver}
                                     // onDragEnd={this.dragEnd}
+                                    id={index}
+                                    key={index}
                                     onClickHandler={onClickHandler}
                                     onKeyDownHandler={onKeyDownHandler}
                                     BadIsSelectedInput={BadIsSelectedInput === val.id}
@@ -51,4 +45,5 @@ class Todo extends React.Component   {
                         )
             }
 }
+
 export default Todo;

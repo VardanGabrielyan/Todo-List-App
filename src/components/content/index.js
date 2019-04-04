@@ -3,8 +3,8 @@ import TableInput from "./tableInput";
 //import GoodTodo from "./GoodTodo.js"
 //import BadTodo from "./BadTodo.js"
 import Todo from "./Todo.js"
-import injectSheet from 'react-jss'
-
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 export class Content extends React.Component  {
 
@@ -176,4 +176,4 @@ export class Content extends React.Component  {
                     )
             }
 }
-export default Content;
+export default DragDropContext(HTML5Backend)(Content);
