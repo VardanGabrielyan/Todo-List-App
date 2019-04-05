@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Header from "./components/header"
-import Content from "./components/content"
+import DragDropContextContainer from "./components/content"
 
 
 class App extends Component {
@@ -37,7 +37,7 @@ class App extends Component {
         <h1> Todo List</h1>
         <table className="tableStyle">
           <Header />
-          <Content />
+          <DragDropContextContainer />
         </table>
       </div>
     );

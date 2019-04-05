@@ -1,6 +1,6 @@
 import React from "react";
-import TableInput from "./tableInput";
-import Content from "./index.js"
+import DragDrop from "./tableInput";
+import "./index.js"
 import { DragSource } from 'react-dnd';
 import { DropTarget } from 'react-dnd';
 import './styles.css'
@@ -10,6 +10,8 @@ class Todo extends React.Component   {
         const { 
             style,
             checked,
+            findTodo,
+            moveTodo,
             GoodIsSelectedInput,
             BadIsSelectedInput,
             onCheckHandler, 
@@ -21,23 +23,24 @@ class Todo extends React.Component   {
                 } = this.props;
         
                 return(
-                        
                     <td 
                         valign="top">
                         <div>
-                            {this.props.data.map((val, index) => (
-                                <TableInput
+                            {this.props.data.map(val => (
+                                <DragDrop
                                     // draggable="true"
                                     // onDragStart={this.dragStart}
                                     // onDragOver={this.dragOver}
                                     // onDragEnd={this.dragEnd}
-                                    id={index}
-                                    key={index}
+                                    // id={val.id}
+                                    // key={val.id}
                                     onClickHandler={onClickHandler}
                                     onKeyDownHandler={onKeyDownHandler}
                                     BadIsSelectedInput={BadIsSelectedInput === val.id}
                                     GoodIsSelectedInput={GoodIsSelectedInput === val.id}
                                     getSelectedTextCut={getSelectedTextCut}
+                                    findTodo={findTodo}
+                                    moveTodo={moveTodo}
                                 />))        
                             }
                         </div>
