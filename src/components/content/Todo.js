@@ -1,6 +1,7 @@
 import React from "react";
 import DragDrop from "./tableInput";
-import "./index.js"
+//import "./index.js"
+import DragDropContextContainer from "./index.js"
 import { DragSource } from 'react-dnd';
 import { DropTarget } from 'react-dnd';
 import './styles.css'
@@ -13,26 +14,19 @@ class Todo extends React.Component   {
             findTodo,
             moveTodo,
             GoodIsSelectedInput,
-            BadIsSelectedInput,
-            onCheckHandler, 
+            BadIsSelectedInput, 
             onClickHandler,
             onKeyDownHandler,
-            className,
             checkBoxClickHandler,
             getSelectedTextCut,
                 } = this.props;
-        
                 return(
                     <td 
                         valign="top">
                         <div>
                             {this.props.data.map(val => (
                                 <DragDrop
-                                    // draggable="true"
-                                    // onDragStart={this.dragStart}
-                                    // onDragOver={this.dragOver}
-                                    // onDragEnd={this.dragEnd}
-                                    // id={val.id}
+                                    id={val.id}
                                     // key={val.id}
                                     onClickHandler={onClickHandler}
                                     onKeyDownHandler={onKeyDownHandler}
@@ -48,5 +42,4 @@ class Todo extends React.Component   {
                         )
             }
 }
-
 export default Todo;
