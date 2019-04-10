@@ -3,39 +3,55 @@ import TableInput from "./tableInput";
 import Todo from "./Todo.js"
 import { DragDropContext, DragSource, DropTarget } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import { log } from "util";
+import uuid from 'uuid';
 
 
 export class Content extends React.Component  {
+    
+    
     constructor(props){
         super(props)
+
         this.state = {
-            good: [{id: 1}],
-            bad: [{id: 1}],
+            good: [{id: uuid()}],
+            bad: [{id: uuid()}],
             GoodIsSelectedInput: 1,
             BadIsSelectedInput: null,
         };
     }
-    _currentId = 1;
-    get currentId() {
-        return ++this._currentId;    
-    }
     
     findTodo = (id) => {
-        const todos  = this.state.good
-		const todo = todos.filter((g={})=> g.id ===id)[0]
-		return {
-			todo,
-			index: todos.indexOf(todo),
+        const goodTodos  = this.state.good
+        const badTodos = this.state.bad
+        const goodTodo = goodTodos.filter((g={})=> g.id ===id)[0]
+        const badTodo = badTodos.filter((b={})=> b.id ===id)[0]
+        if(goodTodos){
+            return {
+                goodTodo,
+                index: goodTodos.indexOf(goodTodo),
+            }
         }
+        if(badTodos){
+            return{
+                badTodo,
+                index: badTodos.indexOf(badTodo),
+            }
+        }
+		
 
     }
     moveTodo = (id, atIndex) => {
-		const {todo,index} = this.findTodo(id)
-    let newTodo = this.state.good
-    newTodo.splice(index, 1); // removing what you are dragging.
-    newTodo.splice(atIndex, 0, todo); // inserting it into hoverIndex.
-		this.setState({
-				good: newTodo,
+		const {goodTodo,badTodo,index} = this.findTodo(id)
+    let newGoodTodo = this.state.good
+    let newBadTodo = this.state.bad
+    newGoodTodo.splice(index, 1); // removing what you are dragging.
+    newGoodTodo.splice(atIndex, 0, goodTodo); // inserting it into hoverIndex.
+    newBadTodo.splice(index,1);
+    newBadTodo.splice(atIndex, 0, badTodo);    
+    this.setState({
+                good: newBadTodo,
+                bad: newGoodTodo,
     })
 	}
 
@@ -183,14 +199,18 @@ export class Content extends React.Component  {
         }
     }
     addLabel = type => {  
+        const newtodo = {
+            id: uuid.v4()
+        }
+        const newtodoBad = {
+            id: uuid.v4()
+        }
         switch (type) {
             case 'good':
                 this.setState({
                         good: [
                             ...this.state.good, 
-                            {
-                                id: this.currentId                           
-                            }
+                            newtodo
                         ]
                 });
                 break;
@@ -198,9 +218,7 @@ export class Content extends React.Component  {
                 this.setState({
                         bad: [
                             ...this.state.bad, 
-                            {
-                                id: this.currentId                         
-                            }
+                            newtodoBad
                         ]
         });
                 break;
@@ -209,64 +227,64 @@ export class Content extends React.Component  {
         }
     }
     render(){
+        console.log('good-----',this.state.good)
+        console.log('bad------',this.state.bad)
+
         const {connectDropTarget} = this.props
         const goodTodos=this.state.good
         const badTodos=this.state.bad
-        const goodDrag=goodTodos.map(todo => 
-               <Todo 
-                            //key={this.state.good.id}
-                            id={todo.id}
-                            moveTodo={this.moveTodo}
-                            findTodo={this.findTodo}
-                            data={this.state.good}
-                            GoodIsSelectedInput={this.state.GoodIsSelectedInput}
-                            onKeyDownHandler={this.onKeyDownHandler('good')}
-                            onClickHandler={this.onClickHandler('good')}
-                            getSelectedTextCut={this.getSelectedTextCut('good')}
-                            />
-        )
-        const badDrag=badTodos.map(todo =>
-              <Todo 
-                            //key={this.state.good.id}
-                            id={todo.id}
-                            moveTodo={this.moveTodo}
-                            findTodo={this.findTodo}
-                            data={this.state.bad}
-                            BadIsSelectedInput={this.state.BadIsSelectedInput}
-                            onKeyDownHandler={this.onKeyDownHandler('bad')}
-                            onClickHandler={this.onClickHandler('bad')}
-                            getSelectedTextCut={this.getSelectedTextCut('bad')}
-                            />
-        )
-            return (           
+        // const goodDrag=goodTodos.map((todo) => 
+        //        <Todo 
+        //             key={this.state.good.id}
+        //             id={todo.id}
+        //             moveTodo={this.moveTodo}
+        //             findTodo={this.findTodo}
+        //             data={this.state.good}
+        //             GoodIsSelectedInput={this.state.GoodIsSelectedInput}
+        //             onKeyDownHandler={this.onKeyDownHandler('good')}
+        //             onClickHandler={this.onClickHandler('good')}
+        //             getSelectedTextCut={this.getSelectedTextCut('good')}
+        //         />
+        // )
+        // const badDrag=badTodos.map(todo =>
+        //       <Todo 
+        //                     //key={this.state.good.id}
+        //             id={todo.id}
+        //             moveTodo={this.moveTodo}
+        //             findTodo={this.findTodo}
+        //             data={this.state.bad}
+        //             BadIsSelectedInput={this.state.BadIsSelectedInput}
+        //             onKeyDownHandler={this.onKeyDownHandler('bad')}
+        //             onClickHandler={this.onClickHandler('bad')}
+        //             getSelectedTextCut={this.getSelectedTextCut('bad')}
+        //             />
+        // )
+            return connectDropTarget(           
                 <tr>
                     <td valign="top">
-                            {/* {goodDrag} */}
-                        <Todo 
-                            //key={this.state.good.id}
-                            //id={this.state.good.id}
-                            //moveTodo={this.moveTodo}
-                            //findTodo={this.findTodo}
-                            data={this.state.good}
-                            GoodIsSelectedInput={this.state.GoodIsSelectedInput}
-                            onKeyDownHandler={this.onKeyDownHandler('good')}
-                            onClickHandler={this.onClickHandler('good')}
-                            getSelectedTextCut={this.getSelectedTextCut('good')}
-                            />
+                    <Todo 
+                        key={this.state.good.id}
+                        moveTodo={this.moveTodo}
+                        findTodo={this.findTodo}
+                        data={this.state.good}
+                        GoodIsSelectedInput={this.state.GoodIsSelectedInput}
+                        onKeyDownHandler={this.onKeyDownHandler('good')}
+                        onClickHandler={this.onClickHandler('good')}
+                        getSelectedTextCut={this.getSelectedTextCut('good')}
+                />
                     </td>
                     <td valign="top">
-                            {/* {badDrag} */}
-                        <Todo 
-                            //key={this.state.bad.id}
-                            //id={this.state.bad.id}
-                            //moveTodo={this.moveTodo}
-                            //findTodo={this.findTodo}
-                            data={this.state.bad}
-                            BadIsSelectedInput={this.state.BadIsSelectedInput}
-                            onKeyDownHandler={this.onKeyDownHandler('bad')}
-                            onClickHandler={this.onClickHandler('bad')}
-                            getSelectedTextCut={this.getSelectedTextCut('bad')}
-                        />
+                    <Todo 
+                        key={this.state.good.id}
+                        moveTodo={this.moveTodo}
+                        findTodo={this.findTodo}
+                        data={this.state.bad}
+                        BadIsSelectedInput={this.state.BadIsSelectedInput}
+                        onKeyDownHandler={this.onKeyDownHandler('bad')}
+                        onClickHandler={this.onClickHandler('bad')}
+                        getSelectedTextCut={this.getSelectedTextCut('bad')}
+                    />
+                       
                     </td>
                 </tr>
                     )

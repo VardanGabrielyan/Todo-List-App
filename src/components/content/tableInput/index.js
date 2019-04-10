@@ -11,24 +11,23 @@ import _ from 'lodash';
     state={
         isChecked: false,
     }
-    // componentDidMount() {  
-    //     if (this.props.GoodIsSelectedInput) {
-    //         this.inp.focus()        
-    //     };
-    // }
-    // componentDidUpdate() {  
-    //     if (this.props.GoodIsSelectedInput) {
-    //         this.inp.focus()        
-    //     };
-    //     if(this.props.BadIsSelectedInput){
-    //         this.inp.focus()
-    //     }
-    // }
+    componentDidMount() {  
+        if (this.props.GoodIsSelectedInput) {
+            this.inp.focus()        
+        };
+    }
+    componentDidUpdate() {  
+        if (this.props.GoodIsSelectedInput) {
+            this.inp.focus()        
+        };
+        if(this.props.BadIsSelectedInput){
+            this.inp.focus()
+        }
+    }
+    
     inputRef = input => this.inp = input; 
-    checkHandler = e => this.setState({isChecked: e.target.checked});
+    checkHandler = e => this.setState({isChecked: e.target.checked}); 
     render() {
-       console.log('findtodo----', this.props.findTodo);
-       console.log('movetodo----', this.props.moveTodo)
         const { isDragging, 
                 connectDragSource, 
                 connectDropTarget, 
@@ -39,7 +38,7 @@ import _ from 'lodash';
                     {!isDragging && 
                     <input
                         className={this.state.isChecked && "line-through-table-input"}
-                        //ref={this.inputRef}
+                        ref={this.inputRef}
                         id={this.props.id}
                         onKeyDown={this.props.onKeyDownHandler}
                         onCut={this.props.getSelectedTextCut}
@@ -59,13 +58,18 @@ const Types = {
     ITEM: 'todo'
 }
 const itemSource = {
+    
     beginDrag(props) {
+        console.log(props, 'beginDrag');
+
       return {
           id: props.id,
           initialIndex: props.findTodo(props.id).index,
       }
     },
     endDrag(props, monitor) {
+        console.log(props, 'endDrag');
+        
        const {id: droppedId, initialIndex} = monitor.getItem()
        const didDrop = monitor.didDrop()
        if(!didDrop){
@@ -81,12 +85,12 @@ const itemSource = {
 		const { id: draggedId } = monitor.getItem()
 		const { id: overId } = props
 		if (draggedId !== overId) {
-			const { index: overIndex } = this.props.findTodo(overId)
-			this.props.moveTodo(draggedId, overIndex)
+			const { index: overIndex } = props.findTodo(overId)
+			props.moveTodo(draggedId, overIndex)
 		}
 	}
   }
-  const collectDrag = (connect, monitor) => {
+  const collectDrag = (connect, monitor) => {      
     return {
       connectDragSource: connect.dragSource(),
       isDragging: monitor.isDragging()
@@ -94,6 +98,7 @@ const itemSource = {
     }
   }
   const collectDrop = (connect, monitor) => {
+
     return {
       connectDropTarget: connect.dropTarget()
     }
