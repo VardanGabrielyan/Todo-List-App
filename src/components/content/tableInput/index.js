@@ -1,7 +1,6 @@
 import React from "react";
 import './styles.css';
 import DragDropContextContainer from "../index.js"
-import Todo from "../Todo.js"
 import { DragSource } from 'react-dnd';
 import { DropTarget } from 'react-dnd';
 import _ from 'lodash';
@@ -40,9 +39,11 @@ import _ from 'lodash';
                         className={this.state.isChecked && "line-through-table-input"}
                         ref={this.inputRef}
                         id={this.props.id}
+                        value={this.props.value}
                         onKeyDown={this.props.onKeyDownHandler}
                         onCut={this.props.getSelectedTextCut}
                         onClick={this.props.onClickHandler}
+                        onChange={this.props.onChangeHandler}
                     />}
                     <input 
                         onClick={this.props.checkBoxClick}
@@ -58,38 +59,27 @@ const Types = {
     ITEM: 'todo'
 }
 const itemSource = {
-    
     beginDrag(props) {
         console.log(props, 'beginDrag');
-
       return {
           id: props.id,
-          initialIndex: props.findTodo(props.id).index,
+          //initialIndex: props.findTodo(props.id).index,
       }
     },
     endDrag(props, monitor) {
         console.log(props, 'endDrag');
         
-       const {id: droppedId, initialIndex} = monitor.getItem()
-       const didDrop = monitor.didDrop()
-       if(!didDrop){
-           props.moveTodo(droppedId, initialIndex)
-       }
+       const {id: droppedId//, initialIndex
+    } = monitor.getItem()
+       //const didDrop = monitor.didDrop()
+       props.moveTodo(droppedId)
+    //    if(!didDrop){
+    //        props.moveTodo(droppedId//, initialIndex
+    //         )
+    //    }
     }
   }
-  const todoTarget = {
-      canDrop(){
-          return false
-      },
-      hover(props, monitor) {
-		const { id: draggedId } = monitor.getItem()
-		const { id: overId } = props
-		if (draggedId !== overId) {
-			const { index: overIndex } = props.findTodo(overId)
-			props.moveTodo(draggedId, overIndex)
-		}
-	}
-  }
+  
   const collectDrag = (connect, monitor) => {      
     return {
       connectDragSource: connect.dragSource(),
@@ -105,6 +95,6 @@ const itemSource = {
   }
 const DragDrop = _.flow(
     DragSource(Types.ITEM, itemSource, collectDrag),
-    DropTarget(Types.ITEM, todoTarget, collectDrop)
+    DropTarget(Types.ITEM, {}, collectDrop)
     )(TableInput);
 export default DragDrop;
