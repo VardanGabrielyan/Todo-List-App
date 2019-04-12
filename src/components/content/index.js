@@ -4,7 +4,11 @@ import { DragDropContext, DragSource, DropTarget } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import uuid from 'uuid';
 
-const enter = 13;
+const del=46;
+const space=32;
+const enter=13;
+const backspace=8;
+const selectedText = window.getSelection().toString();
 
 export class Content extends React.Component  {
     
@@ -22,25 +26,14 @@ export class Content extends React.Component  {
             BadIsSelectedInput: null,
         };
     }
+   
 
     onChangeHandler = type => event =>{
         
-        const newArray = this.state[type].flatMap(item => item.id === event.target.id
-                ? [{
-                    ...item,
-                    value: event.target.value,
-                  },
-                  {
-                    id: uuid(),
-                    value: '',
-                  }]
-                : item
-        ) 
-        this.setState({[type]: newArray})
+       
        
     }
     addLabel = type => {  
-        console.log('goods value========',this.state.good[0].value.length)
 
         const newtodoGood = {
             id: uuid.v4(),
@@ -72,70 +65,68 @@ export class Content extends React.Component  {
         }
     }
     onKeyDownHandler = type => event => {
-    //   const keyboardSmallestLetterCode=48;
-    //   const keyboardLargestLetterCode=90;
-    //   const input = event.target.value;
-    //     if (!input.trim().length 
-    //     && event.keyCode 
-    //     >= keyboardSmallestLetterCode 
-    //     && event.keyCode 
-    //     <= keyboardLargestLetterCode 
-    //     && !event.ctrlKey) {
-    //     this.addLabel(type)
-    // } 
-switch (type) {
-    case 'good':
-    if (event.keyCode === enter ){
-        this.setState({
-            GoodIsSelectedInput: this.state.good[this.state.good.length-1].id,
-            BadIsSelectedInput: null,
-        })};
-        break;
-    case 'bad':
-    if (event.keyCode === enter && this.state.bad.value){
-        this.setState({
-            BadIsSelectedInput: this.state.bad[this.state.bad.length-1].id,
-            GoodIsSelectedInput: null,
-})};
-        break;
-    default:
-        break;
-}
-
-const backspace=8;
-    const space=32;
-    const del=46;
-    const selectedText = window.getSelection().toString();
-
-if (event.keyCode === backspace || event.keyCode === space || event.keyCode === del) {
-
-// if (
-//   this.state.good.value.length === 1 && event.keyCode !== del
-//     || (selectedText && selectedText.length === this.state.good.value.length)  
-// ){
-    switch (type) {
-        case 'good':
-            if (
-                this.state.good.value.length ===1 && event.keyCode !== del
-                || (selectedText && selectedText.length === this.state.good.value.length)  
-            ){
-            this.setState({
-                good: this.state.good.slice(0, this.state.good.length - 1)
+            switch (type) {
+                case 'good':
+                if (event.keyCode === enter){
+                    this.setState({
+                        GoodIsSelectedInput: this.state.good[this.state.good.length-1].id,
+                        BadIsSelectedInput: null,
+                    })};
+                    break;
+                case 'bad':
+                if (event.keyCode === enter){
+                    this.setState({
+                        BadIsSelectedInput: this.state.bad[this.state.bad.length-1].id,
+                        GoodIsSelectedInput: null,
             })};
-            break;
-        case 'bad':
-            if (
-                this.state.bad.value.length === 1 && event.keyCode !== del
-                || (selectedText && selectedText.length === this.state.bad.value.length)  
-            ){
-            this.setState({
-                bad: this.state.bad.slice(0, this.state.bad.length - 1)
-            })};
-            break;
-        default:
-            break;
+                    break;
+                default:
+                    break;
+            }
+        
     }
-//}
+    onKeyUpHandler = type => event => {
+
+        const newArray = this.state[type].flatMap(item => item.id === event.target.id
+            ? [{
+                ...item,
+                value: event.target.value,
+              },
+              {
+                id: uuid(),
+                value: '',
+              }]
+            : item
+    )   
+    if(!event.target.value.trim().length && event.keyCode >= 48 && event.keyCode <= 90){
+        this.setState({[type]: newArray})
+
+    } 
+
+        if (event.keyCode === backspace || event.keyCode === space || event.keyCode === del) {
+            switch (type) {
+                case 'good':
+                        if (
+                            event.target.value ===1 && event.keyCode !== del
+                                || (selectedText && selectedText.length === event.target.value.length)  
+                            ){
+                            this.setState({
+                                good: this.state.good.slice(0, this.state.good.length - 1)
+                        })};
+                    break;
+                case 'bad':
+                        if (
+                            event.target.value === 1 && event.keyCode !== del
+                            || (selectedText && selectedText.length === event.target.value.length)  
+                        ){
+                        this.setState({
+                            bad: this.state.bad.slice(0, this.state.bad.length - 1)
+                        })};
+                    break;
+                default:
+                    break;
+            }
+
 } 
     }
     
@@ -186,7 +177,7 @@ if (event.keyCode === backspace || event.keyCode === space || event.keyCode === 
                         break;
                     case 'bad':
                         this.setState({
-                            bad: this.state.bad.slice(0, this.state.bad.length - 1,selectedText.length)
+                            bad: this.state.bad.slice(0, this.state.bad.length - 1)
                             });
                         break;
                     default:
@@ -215,10 +206,11 @@ if (event.keyCode === backspace || event.keyCode === space || event.keyCode === 
     }
     
     render(){
-        console.log('good-----',this.state.good)
-        console.log('bad------',this.state.bad)
+       // console.log('good-----',this.state.good)
+       // console.log('bad------',this.state.bad)
 
-
+    
+   
         const {connectDropTarget} = this.props
         const goodTodos=this.state.good
         const badTodos=this.state.bad
@@ -239,6 +231,7 @@ if (event.keyCode === backspace || event.keyCode === space || event.keyCode === 
                         data={this.state.good}
                         GoodIsSelectedInput={this.state.GoodIsSelectedInput}
                         onKeyDownHandler={this.onKeyDownHandler('good')}
+                        onKeyUpHandler={this.onKeyUpHandler('good')}
                         onClickHandler={this.onClickHandler('good')}
                         getSelectedTextCut={this.getSelectedTextCut('good')}
                         onChangeHandler={this.onChangeHandler('good')}
@@ -253,11 +246,11 @@ if (event.keyCode === backspace || event.keyCode === space || event.keyCode === 
                         data={this.state.bad}
                         BadIsSelectedInput={this.state.BadIsSelectedInput}
                         onKeyDownHandler={this.onKeyDownHandler('bad')}
+                        onKeyUpHandler={this.onKeyUpHandler('bad')}
                         onClickHandler={this.onClickHandler('bad')}
                         getSelectedTextCut={this.getSelectedTextCut('bad')}
                         onChangeHandler={this.onChangeHandler('bad')}
                     />
-                       
                     </td>
                 </tr>
                     )

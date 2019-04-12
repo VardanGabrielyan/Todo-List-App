@@ -40,6 +40,7 @@ import _ from 'lodash';
                         ref={this.inputRef}
                         id={this.props.id}
                         value={this.props.value}
+                        onKeyUp={this.props.onKeyUpHandler}
                         onKeyDown={this.props.onKeyDownHandler}
                         onCut={this.props.getSelectedTextCut}
                         onClick={this.props.onClickHandler}

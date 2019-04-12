@@ -20,7 +20,8 @@ class Todo extends React.Component   {
             checkBoxClickHandler,
             getSelectedTextCut,
             onChangeHandler,
-            value
+            value,
+            onKeyUpHandler
                 } = this.props;
 
                 return (
@@ -28,13 +29,14 @@ class Todo extends React.Component   {
                         valign="top">
                         <div>
                             {this.props.data.map(val => {
-               console.log('selectedinput', GoodIsSelectedInput);
+             //  console.log('selectedinput', GoodIsSelectedInput);
 
                                 return <DragDrop
                                     id={val && val.id}
                                     value={value}
                                     onClickHandler={onClickHandler}
                                     onKeyDownHandler={onKeyDownHandler}
+                                    onKeyUpHandler={onKeyUpHandler}
                                     BadIsSelectedInput={val && BadIsSelectedInput === val.id}
                                     GoodIsSelectedInput={val && GoodIsSelectedInput === val.id}
                                     getSelectedTextCut={getSelectedTextCut}
