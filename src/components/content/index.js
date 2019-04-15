@@ -15,118 +15,129 @@ export class Content extends React.Component  {
     
     constructor(props){
         super(props)
-        this.state = {
-            items: [],
-            good: [{id: uuid(),
-                    value: ''
-                    }],
-            bad: [{id: uuid(),
-                   value: ''
-                    }],
+        this.state = { 
+            input: [
+                    {   id: uuid(), value: '', type: 'good'   },
+                    {   id: uuid(), value: '', type: 'bad'  }
+                ],
             GoodIsSelectedInput: 1,
             BadIsSelectedInput: null,
         };
     }
    
-
     onChangeHandler = type => event =>{
-        let  setItem = [];
+        
+        let  setInput = this.state.input;
+
             let obj ={
                 id: uuid(),
-                title: '',
-                type
-            }
-                    setItem.push(obj);
-                this.setState({items: setItem})
-                console.log(this.state.items, 'asdasda');
-
-        const newArray = this.state[type].flatMap(item => item.id === event.target.id
-            ? [{
-                ...item,
                 value: event.target.value,
-              },
-              {
-                id: uuid(),
-                value: '',
-              }]
-            : item
-    )   
-         if(!event.target.value.trim().length && event.keyCode >= 48 && event.keyCode <= 90){
-                this.setState({[type]: newArray})
-            } 
-                if (event.keyCode === backspace || event.keyCode === space || event.keyCode === del) {
-                    switch (type) {
-                        case 'good':
-                                if (
-                                    event.target.value ===1 && event.keyCode !== del
-                                        || (selectedText && selectedText.length === event.target.value.length)  
-                                    ){
-                                    this.setState({
-                                        good: this.state.good.slice(0, this.state.good.length - 1)
-                                })};
-                            break;
-                        case 'bad':
-                                if (this.isEmpty(ItemId)  
-                                ){
-                                this.setState({
-                                    bad: this.state.bad.slice(0, this.state.bad.length - 1)
-                                })};
-                            break;
-                        default:
-                            break;
-                    }
-        }       
-    }
-    addLabel = type => {  
-
-        const newtodoGood = {
-            id: uuid.v4(),
-            value: ''
-        }
-        const newtodoBad = {
-            id: uuid.v4(),
-            value: ''
-        }
-        switch (type) {
-            case 'good':
-                this.setState({
-                        good: [
-                            ...this.state.good, 
-                             newtodoGood
-                        ]
-                });
-                break;
-            case 'bad':
-                this.setState({
-                        bad: [
-                            ...this.state.bad, 
-                            newtodoBad
-                        ]
-        });
-                break;
-            default:
-                break;
-        }
-    }
-    onKeyDownHandler = type => event => {
-            switch (type) {
-                case 'good':
-                if (event.keyCode === enter){
-                    this.setState({
-                        GoodIsSelectedInput: this.state.good[this.state.good.length-1].id,
-                        BadIsSelectedInput: null,
-                    })};
-                    break;
-                case 'bad':
-                if (event.keyCode === enter){
-                    this.setState({
-                        BadIsSelectedInput: this.state.bad[this.state.bad.length-1].id,
-                        GoodIsSelectedInput: null,
-            })};
-                    break;
-                default:
-                    break;
+                type:type
             }
+                  setInput.push(obj);
+                    this.setState({
+                        input: setInput
+                    })
+                    if(event.keyCode === enter){
+                        this.setState({
+                            GoodIsSelectedInput: this.state.input.length--,
+                            BadIsSelectedInput: null,
+                        })};
+                    
+                      console.log('sssssssssssss',this.state.GoodIsSelectedInput)
+                    
+                    // switch (type) {
+                    //     case 'good':
+                    //     if (event.keyCode === enter){
+                            
+                    //         break;
+                    //     case 'bad':
+                    //     if (event.keyCode === enter){
+                    //         this.setState({
+                    //             BadIsSelectedInput: this.state.bad[this.state.bad.length-1].id,
+                    //             GoodIsSelectedInput: null,
+                    // })};
+                    //         break;
+                    //     default:
+                    //         break;
+                    // }
+               
+
+    //     const newArray = this.state[type].flatMap(item => item.id === event.target.id
+    //         ? [{
+    //             ...item,
+    //             value: event.target.value,
+    //           },
+    //           {
+    //             id: uuid(),
+    //             value: '',
+    //           }]
+    //         : item
+
+    // ) 
+    
+             
+    
+    //  this.setState({[type]: newArray})
+        //  if(!event.target.value.trim().length && event.keyCode >= 48 && event.keyCode <= 90){
+             
+        //     } 
+        //         if (event.keyCode === backspace || event.keyCode === space || event.keyCode === del) {
+        //             switch (type) {
+        //                 case 'good':
+        //                         if (
+        //                             event.target.value ===1 && event.keyCode !== del
+        //                                 || (selectedText && selectedText.length === event.target.value.length)  
+        //                             ){
+        //                             this.setState({
+        //                                 good: this.state.good.slice(0, this.state.good.length - 1)
+        //                         })};
+        //                     break;
+        //                 case 'bad':
+        //                         if (this.isEmpty(ItemId)  
+        //                         ){
+        //                         this.setState({
+        //                             bad: this.state.bad.slice(0, this.state.bad.length - 1)
+        //                         })};
+        //                     break;
+        //                 default:
+        //                     break;
+        //             }
+        // }       
+    }
+    // addLabel = type => {  
+
+    //     const newtodoGood = {
+    //         id: uuid.v4(),
+    //         value: ''
+    //     }
+    //     const newtodoBad = {
+    //         id: uuid.v4(),
+    //         value: ''
+    //     }
+    //     switch (type) {
+    //         case 'good':
+    //             this.setState({
+    //                     good: [
+    //                         ...this.state.good, 
+    //                          newtodoGood
+    //                     ]
+    //             });
+    //             break;
+    //         case 'bad':
+    //             this.setState({
+    //                     bad: [
+    //                         ...this.state.bad, 
+    //                         newtodoBad
+    //                     ]
+    //     });
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    // }
+    onKeyDownHandler = type => event => {
+           
         
     }
     onKeyUpHandler = type => event => {
@@ -134,32 +145,32 @@ export class Content extends React.Component  {
    
     }
     
-    findTodo = (id) => {
-        const goodTodos  = this.state.good
-        const badTodos = this.state.bad
-        const goodTodo = goodTodos.filter((g={})=> g.id ===id)[0]
-        const badTodo = badTodos.filter((b)=> {
-            if(b.id ===id){
-                return b
-            }
-            return null
-        }
-        if(goodTodos){
-            return {
-                goodTodo,
-                goodIndex: goodTodos.indexOf(goodTodo),
-            }
-        }
-        if(badTodos){
-            return{
-                badTodo,
-                badIndex: badTodos.indexOf(badTodo),
-            }
-        }
-        return badTodo;
+    // findTodo = (id) => {
+    //     const goodTodos  = this.state.good
+    //     const badTodos = this.state.bad
+    //     const goodTodo = goodTodos.filter((g={})=> g.id ===id)[0]
+    //     const badTodo = badTodos.filter((b)=> {
+    //         if(b.id ===id){
+    //             return b
+    //         }
+    //         return null
+    //     }
+    //     if(goodTodos){
+    //         return {
+    //             goodTodo,
+    //             goodIndex: goodTodos.indexOf(goodTodo),
+    //         }
+    //     }
+    //     if(badTodos){
+    //         return{
+    //             badTodo,
+    //             badIndex: badTodos.indexOf(badTodo),
+    //         }
+    //     }
+    //     return badTodo;
 		
-
-    }
+    // }
+    // }
     moveTodo = (id, atIndex) => {
 		const {goodTodo,badTodo,goodIndex,badIndex} = this.findTodo(id)
     let newGoodTodo = this.state.good
@@ -177,6 +188,14 @@ export class Content extends React.Component  {
         const selectedText = window.getSelection().toString();
         event.oncut = () =>{return false} 
         const cut = event.oncut;
+
+
+        if(cut && selectedText && selectedText.length === event.target.value.length){
+            this.setState({
+                input: this.state.input.slice(0, this.state.input.length - 1)
+                })
+        }
+
 
             if(cut && selectedText && selectedText.length === event.target.value.length)  {
                 switch (type) {
@@ -216,10 +235,9 @@ export class Content extends React.Component  {
     }
     
     render(){
+        console.log(this.state.input, 'asdasda');
        // console.log('good-----',this.state.good)
        // console.log('bad------',this.state.bad)
-
-    
    
         const {connectDropTarget} = this.props
         const goodTodos=this.state.good
@@ -234,31 +252,34 @@ export class Content extends React.Component  {
                 <tr>
                     <td valign="top">
                     <Todo 
-                        key={this.state.good.id}
-                        value={this.state.good.value}
-                        moveTodo={this.moveTodo}
-                        findTodo={this.findTodo}
-                        data={this.state.good}
+                        type='good'
+
+                    //    key={this.state.good.id}
+                   //     value={this.state.good.value}
+                    //    moveTodo={this.moveTodo}
+                    //    findTodo={this.findTodo}
+                        data={this.state.input}
                         GoodIsSelectedInput={this.state.GoodIsSelectedInput}
-                        onKeyDownHandler={this.onKeyDownHandler('good')}
-                        onKeyUpHandler={this.onKeyUpHandler('good')}
-                        onClickHandler={this.onClickHandler('good')}
-                        getSelectedTextCut={this.getSelectedTextCut('good')}
+                        //onKeyDownHandler={this.onKeyDownHandler('good')}
+                        //onKeyUpHandler={this.onKeyUpHandler('good')}
+                        //onClickHandler={this.onClickHandler('good')}
+                        //getSelectedTextCut={this.getSelectedTextCut('good')}
                         onChangeHandler={this.onChangeHandler('good')}
                 />
                     </td>
                     <td valign="top">
                     <Todo 
-                        key={this.state.good.id}
-                        value={this.state.bad.value}
-                        moveTodo={this.moveTodo}
-                        findTodo={this.findTodo}
-                        data={this.state.bad}
+                        type='bad'
+                        //key={this.state.good.id}
+                        //value={this.state.bad.value}
+                        //moveTodo={this.moveTodo}
+                        //findTodo={this.findTodo}
+                        data={this.state.input}
                         BadIsSelectedInput={this.state.BadIsSelectedInput}
-                        onKeyDownHandler={this.onKeyDownHandler('bad')}
-                        onKeyUpHandler={this.onKeyUpHandler('bad')}
-                        onClickHandler={this.onClickHandler('bad')}
-                        getSelectedTextCut={this.getSelectedTextCut('bad')}
+                        //onKeyDownHandler={this.onKeyDownHandler('bad')}
+                        //onKeyUpHandler={this.onKeyUpHandler('bad')}
+                        //onClickHandler={this.onClickHandler('bad')}
+                        //getSelectedTextCut={this.getSelectedTextCut('bad')}
                         onChangeHandler={this.onChangeHandler('bad')}
                     />
                     </td>

@@ -9,6 +9,7 @@ class Todo extends React.Component   {
     render(){
         
         const { 
+            type,
             style,
             checked,
             findTodo,
@@ -28,26 +29,44 @@ class Todo extends React.Component   {
                     <td 
                         valign="top">
                         <div>
-                            {this.props.data.map(val => {
-             //  console.log('selectedinput', GoodIsSelectedInput);
-
-                                return <DragDrop
-                                    id={val && val.id}
-                                    value={value}
-                                    onClickHandler={onClickHandler}
-                                    onKeyDownHandler={onKeyDownHandler}
-                                    onKeyUpHandler={onKeyUpHandler}
-                                    BadIsSelectedInput={val && BadIsSelectedInput === val.id}
-                                    GoodIsSelectedInput={val && GoodIsSelectedInput === val.id}
-                                    getSelectedTextCut={getSelectedTextCut}
-                                    findTodo={findTodo}
-                                    moveTodo={moveTodo}
-                                    onChangeHandler={onChangeHandler}
-                            />})        
+                            {this.props.data.filter(val => val.type === type).map(
+                                val => {
+                                    return <DragDrop
+                                        //id={val && val.id}
+                                        //value={value}
+                                        //onClickHandler={onClickHandler}
+                                        //onKeyDownHandler={onKeyDownHandler}
+                                        //onKeyUpHandler={onKeyUpHandler}
+                                        BadIsSelectedInput={val && BadIsSelectedInput === val.id}
+                                        GoodIsSelectedInput={val && GoodIsSelectedInput === val.id}
+                                        //getSelectedTextCut={getSelectedTextCut}
+                                        //findTodo={findTodo}
+                                        //moveTodo={moveTodo}
+                                        onChangeHandler={onChangeHandler}
+                                /> }
+                                // if(val.type='bad'){
+                                //     return<DragDrop
+                                //         id={val && val.id}
+                                //         value={value}
+                                //         //onClickHandler={onClickHandler}
+                                //         //onKeyDownHandler={onKeyDownHandler}
+                                //         //onKeyUpHandler={onKeyUpHandler}
+                                //         BadIsSelectedInput={val && BadIsSelectedInput === val.id}
+                                //         GoodIsSelectedInput={val && GoodIsSelectedInput === val.id}
+                                //         //getSelectedTextCut={getSelectedTextCut}
+                                //         //findTodo={findTodo}
+                                //         //moveTodo={moveTodo}
+                                //         onChangeHandler={onChangeHandler}
+                                // />
+                                //   } 
+                            )
                             }
+                        
                         </div>
                     </td>
-                        )
-            }
+                )
+    }                      
 }
+
+
 export default Todo;
