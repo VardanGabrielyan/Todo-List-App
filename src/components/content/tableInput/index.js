@@ -64,20 +64,20 @@ const itemSource = {
         console.log(props, 'beginDrag');
       return {
           id: props.id,
-          //initialIndex: props.findTodo(props.id).index,
+        nitialIndex: props.findTodo(props.id).index,
       }
     },
     endDrag(props, monitor) {
         console.log(props, 'endDrag');
         
-       const {id: droppedId//, initialIndex
+       const {id: droppedId, initialIndex
     } = monitor.getItem()
-       //const didDrop = monitor.didDrop()
+       const didDrop = monitor.didDrop()
        props.moveTodo(droppedId)
-    //    if(!didDrop){
-    //        props.moveTodo(droppedId//, initialIndex
-    //         )
-    //    }
+       if(!didDrop){
+           props.moveTodo(droppedId//, initialIndex
+         )
+        }
     }
   }
   

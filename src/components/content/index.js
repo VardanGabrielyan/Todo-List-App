@@ -16,6 +16,7 @@ export class Content extends React.Component  {
     constructor(props){
         super(props)
         this.state = {
+            items: [],
             good: [{id: uuid(),
                     value: ''
                     }],
@@ -29,9 +30,52 @@ export class Content extends React.Component  {
    
 
     onChangeHandler = type => event =>{
-        
-       
-       
+        let  setItem = [];
+            let obj ={
+                id: uuid(),
+                title: '',
+                type
+            }
+                    setItem.push(obj);
+                this.setState({items: setItem})
+                console.log(this.state.items, 'asdasda');
+
+        const newArray = this.state[type].flatMap(item => item.id === event.target.id
+            ? [{
+                ...item,
+                value: event.target.value,
+              },
+              {
+                id: uuid(),
+                value: '',
+              }]
+            : item
+    )   
+         if(!event.target.value.trim().length && event.keyCode >= 48 && event.keyCode <= 90){
+                this.setState({[type]: newArray})
+            } 
+                if (event.keyCode === backspace || event.keyCode === space || event.keyCode === del) {
+                    switch (type) {
+                        case 'good':
+                                if (
+                                    event.target.value ===1 && event.keyCode !== del
+                                        || (selectedText && selectedText.length === event.target.value.length)  
+                                    ){
+                                    this.setState({
+                                        good: this.state.good.slice(0, this.state.good.length - 1)
+                                })};
+                            break;
+                        case 'bad':
+                                if (this.isEmpty(ItemId)  
+                                ){
+                                this.setState({
+                                    bad: this.state.bad.slice(0, this.state.bad.length - 1)
+                                })};
+                            break;
+                        default:
+                            break;
+                    }
+        }       
     }
     addLabel = type => {  
 
@@ -87,54 +131,19 @@ export class Content extends React.Component  {
     }
     onKeyUpHandler = type => event => {
 
-        const newArray = this.state[type].flatMap(item => item.id === event.target.id
-            ? [{
-                ...item,
-                value: event.target.value,
-              },
-              {
-                id: uuid(),
-                value: '',
-              }]
-            : item
-    )   
-    if(!event.target.value.trim().length && event.keyCode >= 48 && event.keyCode <= 90){
-        this.setState({[type]: newArray})
-
-    } 
-
-        if (event.keyCode === backspace || event.keyCode === space || event.keyCode === del) {
-            switch (type) {
-                case 'good':
-                        if (
-                            event.target.value ===1 && event.keyCode !== del
-                                || (selectedText && selectedText.length === event.target.value.length)  
-                            ){
-                            this.setState({
-                                good: this.state.good.slice(0, this.state.good.length - 1)
-                        })};
-                    break;
-                case 'bad':
-                        if (
-                            event.target.value === 1 && event.keyCode !== del
-                            || (selectedText && selectedText.length === event.target.value.length)  
-                        ){
-                        this.setState({
-                            bad: this.state.bad.slice(0, this.state.bad.length - 1)
-                        })};
-                    break;
-                default:
-                    break;
-            }
-
-} 
+   
     }
     
     findTodo = (id) => {
         const goodTodos  = this.state.good
         const badTodos = this.state.bad
         const goodTodo = goodTodos.filter((g={})=> g.id ===id)[0]
-        const badTodo = badTodos.filter((b={})=> b.id ===id)[0]
+        const badTodo = badTodos.filter((b)=> {
+            if(b.id ===id){
+                return b
+            }
+            return null
+        }
         if(goodTodos){
             return {
                 goodTodo,
@@ -147,6 +156,7 @@ export class Content extends React.Component  {
                 badIndex: badTodos.indexOf(badTodo),
             }
         }
+        return badTodo;
 		
 
     }
