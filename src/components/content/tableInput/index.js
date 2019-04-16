@@ -11,6 +11,8 @@ import _ from 'lodash';
         isChecked: false,
     }
     componentDidMount() {  
+        console.log('didmount',this.props.GoodIsSelectedInput);
+        
         if (this.props.GoodIsSelectedInput) {
             this.inp.focus()        
         };
@@ -38,10 +40,10 @@ import _ from 'lodash';
                     <input
                         className={this.state.isChecked && "line-through-table-input"}
                         ref={this.inputRef}
-                        //id={this.props.id}
+                        id={this.props.id}
                         //value={this.props.value}
-                        //onKeyUp={this.props.onKeyUpHandler}
-                        //onKeyDown={this.props.onKeyDownHandler}
+                        onKeyUp={this.props.onKeyUpHandler}
+                        onKeyDown={this.props.onKeyDownHandler}
                         //onCut={this.props.getSelectedTextCut}
                         //onClick={this.props.onClickHandler}
                         onChange={this.props.onChangeHandler}
@@ -64,7 +66,7 @@ const itemSource = {
         console.log(props, 'beginDrag');
       return {
           id: props.id,
-          initialIndex: props.findTodo(props.id).index,
+       //  initialIndex: props.findTodo(props.id).index,
       }
     },
     endDrag(props, monitor) {
@@ -73,10 +75,10 @@ const itemSource = {
        const {id: droppedId, initialIndex
     } = monitor.getItem()
        const didDrop = monitor.didDrop()
-       props.moveTodo(droppedId)
+     //  props.moveTodo(droppedId)
        if(!didDrop){
-           props.moveTodo(droppedId//, initialIndex
-         )
+        //    props.moveTodo(droppedId//, initialIndex
+        //  )
         }
     }
   }
