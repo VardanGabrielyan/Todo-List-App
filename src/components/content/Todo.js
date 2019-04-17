@@ -34,7 +34,7 @@ class Todo extends React.Component   {
                                             onKeyUpHandler={onKeyUpHandler}
                                             BadIsSelectedInput={val && BadIsSelectedInput === val.id}
                                             GoodIsSelectedInput={val && GoodIsSelectedInput === val.id}
-                                            //getSelectedTextCut={getSelectedTextCut}
+                                            getSelectedTextCut={getSelectedTextCut}
                                             //findTodo={findTodo}
                                             //moveTodo={moveTodo}
                                             onChangeHandler={onChangeHandler}

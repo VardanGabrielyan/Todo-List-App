@@ -44,7 +44,7 @@ import _ from 'lodash';
                         //value={this.props.value}
                         onKeyUp={this.props.onKeyUpHandler}
                         onKeyDown={this.props.onKeyDownHandler}
-                        //onCut={this.props.getSelectedTextCut}
+                        onCut={this.props.getSelectedTextCut}
                         //onClick={this.props.onClickHandler}
                         onChange={this.props.onChangeHandler}
                     />}
@@ -69,18 +69,23 @@ const itemSource = {
        //  initialIndex: props.findTodo(props.id).index,
       }
     },
-    endDrag(props, monitor) {
-        console.log(props, 'endDrag');
+    // endDrag(props, monitor,component) {
+    //     console.log(props, 'endDrag');
         
-       const {id: droppedId, initialIndex
-    } = monitor.getItem()
-       const didDrop = monitor.didDrop()
-     //  props.moveTodo(droppedId)
-       if(!didDrop){
-        //    props.moveTodo(droppedId//, initialIndex
-        //  )
-        }
-    }
+    //     const {id: droppedId, initialIndex} = monitor.getItem()
+    //     const dropResult = monitor.getDropResult()
+    //  //  props.moveTodo(droppedId)
+    //    if(!monitor.didDrop()){
+    //        return
+    //     //    props.moveTodo(droppedId//, initialIndex
+    //     //  )
+    //     }
+    // }
+  }
+  const dropTarget = {
+      drop(props, monitor){
+          
+      }
   }
   
   const collectDrag = (connect, monitor) => {      
