@@ -66,25 +66,26 @@ const itemSource = {
         console.log(props, 'beginDrag');
       return {
           id: props.id,
-       //  initialIndex: props.findTodo(props.id).index,
+         initialIndex: props.findTodo(props.id),
       }
     },
-    // endDrag(props, monitor,component) {
-    //     console.log(props, 'endDrag');
-        
-    //     const {id: droppedId, initialIndex} = monitor.getItem()
-    //     const dropResult = monitor.getDropResult()
-    //  //  props.moveTodo(droppedId)
+    endDrag(props, monitor,component) {
+        console.log(props, 'endDrag');
+        props.moveTodo()
+        // const {id: droppedId, initialIndex} = monitor.getItem()
+        // const dropResult = monitor.getDropResult()
+     //  props.moveTodo(droppedId)
     //    if(!monitor.didDrop()){
     //        return
     //     //    props.moveTodo(droppedId//, initialIndex
     //     //  )
     //     }
-    // }
+    }
   }
   const dropTarget = {
       drop(props, monitor){
-          
+          console.log(props);
+          console.log(monitor,'monitor');
       }
   }
   
@@ -103,6 +104,6 @@ const itemSource = {
   }
 const DragDrop = _.flow(
     DragSource(Types.ITEM, itemSource, collectDrag),
-    DropTarget(Types.ITEM, {}, collectDrop)
+    DropTarget(Types.ITEM, dropTarget, collectDrop)
     )(TableInput);
 export default DragDrop;

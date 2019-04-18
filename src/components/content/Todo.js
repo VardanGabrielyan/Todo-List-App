@@ -35,8 +35,8 @@ class Todo extends React.Component   {
                                             BadIsSelectedInput={val && BadIsSelectedInput === val.id}
                                             GoodIsSelectedInput={val && GoodIsSelectedInput === val.id}
                                             getSelectedTextCut={getSelectedTextCut}
-                                            //findTodo={findTodo}
-                                            //moveTodo={moveTodo}
+                                            findTodo={findTodo}
+                                            moveTodo={moveTodo}
                                             onChangeHandler={onChangeHandler}
                             /> 
                         })

@@ -116,9 +116,9 @@ export class Content extends React.Component  {
     //  this.setState({[type]: newArray})
   
     // findTodo = (id) => {
-    //     const goodTodos  = this.state.good
+    //     const goodTodos  = this.state.good.includes(id)
     //     const badTodos = this.state.bad
-    //     const goodTodo = goodTodos.filter((g={})=> g.id ===id)[0]
+    //     const goodTodo = goodTodos.filter((g={})=> g.id ===id)
         // const badTodo = badTodos.filter((b)=> {
         //     if(b.id ===id){
         //         return b
@@ -137,27 +137,37 @@ export class Content extends React.Component  {
         //         badIndex: badTodos.indexOf(badTodo),
         //     }
         // }
-        // return badTodo;
-    findTodo=(id)=>{
-        const goodTodos  = this.state.good
-        const badTodos = this.state.bad
-        const goodTodo = goodTodos.filter((g={})=> g.id ===id)[0]
-       
+    findTodo= type =>id=>{
+        return{
+            goodTodo: 'barev',
+        }
+        // if(type === 'good'){
+        //     const goodTodos  = this.state.good
+        //     const goodTodo = goodTodos.filter((g) => g.id ===id)
+        //     console.log(goodTodo, 'fitered good')
+           
+        // } else {
+        //     const badTodos = this.state.bad
+        //     const badTodo= badTodos.filter((item) => item.id === id)
+        //     console.log(badTodo, 'filtered bad')
+        // }
+        
     }
     
    
-    moveTodo = (id, atIndex) => {
-		const {goodTodo,badTodo,goodIndex,badIndex} = this.findTodo(id)
-    let newGoodTodo = this.state.good
-    let newBadTodo = this.state.bad
-    newGoodTodo.splice(goodIndex, 1); // removing what you are dragging.
-    newGoodTodo.splice(atIndex, 0, badTodo); // inserting it into hoverIndex.
-    newBadTodo.splice(badIndex,1);
-    newBadTodo.splice(atIndex, 0, goodTodo);    
-    this.setState({
-                good: newBadTodo,
-                bad: newGoodTodo,
-    })
+    moveTodo = () => {
+        const {goodTodo,badTodo, selectedGood,selectedBad} = this.findTodo()
+        console.log(goodTodo, 'sadasdasd');
+    // let newGoodTodo = this.state.good
+    // let newBadTodo = this.state.bad
+    // // newGoodTodo.splice(goodIndex, 1); // removing what you are dragging.
+    // newGoodTodo.splice(atIndex, 0, badTodo); // inserting it into hoverIndex.
+    // newBadTodo.splice(badIndex,1);
+    // newBadTodo.splice(atIndex, 0, goodTodo);    
+    // this.setState({
+    //             good: [...newBadTodo, selectedGood],
+    //             bad: [...newGoodTodo, selectedBad],
+    // })
 	}
     
     render (){
@@ -172,8 +182,8 @@ export class Content extends React.Component  {
                     <Todo 
                     //    key={this.state.good.id}
                    //     value={this.state.good.value}
-                    //    moveTodo={this.moveTodo}
-                    //    findTodo={this.findTodo}
+                        moveTodo={this.moveTodo}
+                        findTodo={this.findTodo('good')}
                         data={this.state.good}
                         GoodIsSelectedInput={this.state.GoodIsSelectedInput}
                         onKeyDownHandler={this.onKeyDownHandler('good')}
@@ -187,8 +197,8 @@ export class Content extends React.Component  {
                     <Todo 
                         //key={this.state.good.id}
                         //value={this.state.bad.value}
-                        //moveTodo={this.moveTodo}
-                        //findTodo={this.findTodo}
+                        moveTodo={this.moveTodo}
+                        findTodo={this.findTodo('bad')}
                         data={this.state.bad}
                         BadIsSelectedInput={this.state.BadIsSelectedInput}
                         onKeyDownHandler={this.onKeyDownHandler('bad')}
