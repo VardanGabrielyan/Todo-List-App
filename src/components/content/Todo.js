@@ -7,6 +7,8 @@ import './styles.css'
 
 class Todo extends React.Component   {
     render  (){
+        console.log('this.props.Todo', this.props);
+        
         const { 
             type,
             style,
@@ -28,7 +30,8 @@ class Todo extends React.Component   {
                         <div>
                             {this.props.data.map(val =>{
                                 return  <DragDrop
-                                            id={val.id}
+                                            id={val && val.id}
+                                            value={val.value}
                                             //onClickHandler={onClickHandler}
                                             onKeyDownHandler={onKeyDownHandler}
                                             onKeyUpHandler={onKeyUpHandler}

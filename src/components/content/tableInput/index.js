@@ -10,25 +10,25 @@ import _ from 'lodash';
     state={
         isChecked: false,
     }
-    componentDidMount() {  
-        console.log('didmount',this.props.GoodIsSelectedInput);
-        
+    componentDidMount() {          
         if (this.props.GoodIsSelectedInput) {
-            this.inp.focus()        
+            //this.inp.focus()        
         };
     }
     componentDidUpdate() {  
         if (this.props.GoodIsSelectedInput) {
-            this.inp.focus()        
+            //this.inp.focus()        
         };
         if(this.props.BadIsSelectedInput){
-            this.inp.focus()
+           // this.inp.focus()
         }
     }
     
     inputRef = input => this.inp = input; 
     checkHandler = e => this.setState({isChecked: e.target.checked}); 
     render() {
+        console.log(this.props, 'tabelInput');
+        
         const { isDragging, 
                 connectDragSource, 
                 connectDropTarget, 
@@ -38,6 +38,7 @@ import _ from 'lodash';
                 <div className="line-through">
                     {!isDragging && 
                     <input
+                        value={this.props.value}
                         className={this.state.isChecked && "line-through-table-input"}
                         ref={this.inputRef}
                         id={this.props.id}
@@ -66,27 +67,30 @@ const itemSource = {
         console.log(props, 'beginDrag');
       return {
           id: props.id,
-         initialIndex: props.findTodo(props.id),
+         initialIndex: props.id,
       }
     },
     endDrag(props, monitor,component) {
-        console.log(props, 'endDrag');
-        props.moveTodo()
+        
+
         // const {id: droppedId, initialIndex} = monitor.getItem()
         // const dropResult = monitor.getDropResult()
      //  props.moveTodo(droppedId)
     //    if(!monitor.didDrop()){
-    //        return
-    //     //    props.moveTodo(droppedId//, initialIndex
-    //     //  )
+     //        props.moveTodo()
     //     }
     }
   }
   const dropTarget = {
-      drop(props, monitor){
-          console.log(props);
-          console.log(monitor,'monitor');
+      drop(props, monitor, component){
+          const dragCompId = monitor.getItem().id;
+          const dropCompId = props.id;
+
+          props.moveTodo(dragCompId, dropCompId)
+          console.log( props.moveTodo(dragCompId, dropCompId),'moveTodo')
+          console.log(dropCompId,'sss',dragCompId)
       }
+      
   }
   
   const collectDrag = (connect, monitor) => {      
