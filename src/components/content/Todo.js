@@ -1,14 +1,10 @@
 import React from "react";
 import DragDrop from "./tableInput";
-import { DragSource } from 'react-dnd';
-import { DropTarget } from 'react-dnd';
 import './styles.css'
 
 
 class Todo extends React.Component   {
     render  (){
-        console.log('this.props.Todo', this.props);
-        
         const { 
             type,
             style,
@@ -31,8 +27,8 @@ class Todo extends React.Component   {
                             {this.props.data.map(val =>{
                                 return  <DragDrop
                                             id={val && val.id}
-                                            value={val.value}
-                                            //onClickHandler={onClickHandler}
+                                            value={val && val.value}
+                                            onClickHandler={onClickHandler}
                                             onKeyDownHandler={onKeyDownHandler}
                                             onKeyUpHandler={onKeyUpHandler}
                                             BadIsSelectedInput={val && BadIsSelectedInput === val.id}

@@ -10,14 +10,14 @@ const enter=13;
 const backspace=8;
 const selectedText = window.getSelection().toString();
 
-export class Content extends React.Component  {
+ class Content extends React.Component  {
     constructor(props){
         super(props)
         this.state = { 
             good:  [{  id:  uuid(), value: ''}],
             bad:   [{  id: uuid(), value: ''}],
             GoodIsSelectedInput: 0,
-            BadIsSelectedInput: null,
+            BadIsSelectedInput: 1,
         };
     }   
     onChangeHandler = type => event => {
@@ -70,6 +70,56 @@ export class Content extends React.Component  {
                 this.setState({[type]: this.state[type].slice(0, this.state[type].length - 1)})
             }
         }
+    onClickHandler = type => event => {        
+        if(type==='good'){
+        this.setState({
+            GoodIsSelectedInput: event.target.id,
+        })
+    }
+        if(type==='bad'){
+            this.setState({
+                BadIsSelectedInput: event.target.id,
+            })
+        }
+    }
+    moveTodo = (type) => (dragId, dropId) => {
+                console.log('type',type)
+               
+            if(type==='good'){
+                const dropObject = this.state.good.find(item => item.id === dropId)
+                const dragObject = this.state.bad.find(item => item.id === dragId)
+                //console.log('dropobject',dropObject)
+                //console.log('dragobject',dragObject)
+                    this.setState({
+                        good: this.state.good.map(item => {
+                            // if(dropObject.value===0){
+                            //     console.log('00000000000',this.state.good)
+                            //     return  this.state.good.slice(1)
+                                      
+                            // }   else
+                            return item.id === dropId ? dragObject : item
+                        }),
+                        bad: this.state.bad.map(item => {
+                            return item.id === dragId ? dropObject : item
+                        }),
+                    })
+            }
+            if(type==='bad'){
+                
+                const dropObject = this.state.bad.find(item => item.id === dropId)
+                const dragObject = this.state.good.find(item => item.id === dragId)
+                console.log('dropobject',dropObject)
+                console.log('dragobject',dragObject)
+                    this.setState({
+                        bad: this.state.bad.map(item => {
+                            return item.id === dropId ? dragObject : item
+                        }),
+                        good: this.state.good.map(item => {
+                            return item.id === dragId ? dropObject : item
+                        }),
+                    })
+        }
+            }
 
      //     const newArray = this.state[type].flatMap(item => item.id === event.target.id
     //         ? [{
@@ -84,24 +134,24 @@ export class Content extends React.Component  {
     // ) 
     
     //  this.setState({[type]: newArray})
-    findTodo = type => id => {
-        const goodTodos = this.state.good
-        const badTodos = this.state.bad
-         if(type === 'good'){
-            const goodIndex = goodTodos.find((g) => g.id ===id)
-            console.log(goodIndex, 'fitered good')
-            return {
-                goodTodos,
-                goodIndex//: goodTodos.indexOf(goodTodo),
-            }
-        } else {
-            const badIndex= badTodos.find((item) => item.id === id)
-            console.log(badIndex, 'filtered bad')
-            return{
-                badTodos,
-                badIndex//: badTodos.indexOf(badTodo),
-            }
-        }
+  //  findTodo = type => id => {
+        // const goodTodos = this.state.good
+        // const badTodos = this.state.bad
+        //  if(type === 'good'){
+        //     const goodIndex = goodTodos.find((g) => g.id ===id)
+        //     console.log(goodIndex, 'fitered good')
+        //     return {
+        //         goodTodos,
+        //         goodIndex//: goodTodos.indexOf(goodTodo),
+        //     }
+        // } else {
+        //     const badIndex= badTodos.find((item) => item.id === id)
+        //     console.log(badIndex, 'filtered bad')
+        //     return{
+        //         badTodos,
+        //         badIndex//: badTodos.indexOf(badTodo),
+        //     }
+        // }
         //const goodTodos  = this.state.good.includes(id)
         //const goodTodo = goodTodos.filter((g={})=> g.id ===id)
         //const badTodo = badTodos.filter((b)=> {
@@ -113,52 +163,11 @@ export class Content extends React.Component  {
         // }
         // if(badTodos){
         // }
-}
-    moveTodo = (type) => (dragId, dropId) => {
-      //  const {goodTodos,badTodos,goodIndex,badIndex} = this.findTodo(type)()
-        
-     
-     //let newGoodTodo = this.state.good
-     //let newBadTodo = this.state.bad
-        // console.log(dragObject,'dragobject')
-        // console.log(dropObject,'dropObject', this.state.good, dropId)
-
-        console.log(type, 'type');
-        
-    if(type==='good'){
-        const dropObject = this.state.good.find(item => item.id === dropId)
-        const dragObject = this.state.bad.find(item => item.id === dragId)
-
-        this.setState({
-            good: this.state.good.map(item => {
-                return item.id === dropId ? dragObject : item
-            }),
-            bad: this.state.bad.map(item => {
-                return item.id === dragId ? dropObject : item
-            }),
-        })
-        //if(goodIndex.id!==badIndex.id)
-      //  goodTodos.splice(goodIndex, 1); // removing  dragging.
-      //  goodTodos.splice(0, 0, badIndex); // inserting it into .
-    }
-   else{
-
-    // badTodos.splice(badIndex,1);
-    // badTodos.splice(0, 0, goodTodos);    
-    
-}
-// this.setState({
-//     good: [...goodTodos, goodIndex],
-//     bad: [...badTodos, badIndex],
-// })
-	}
-    
+//}
     render (){
-        console.log('state', this.state);
-        
+        console.log(this.state.good,'good')
+        console.log(this.state.bad,'bad')
         const {connectDropTarget} = this.props
-        const goodTodos=this.state.good
-        const badTodos=this.state.bad
             return connectDropTarget(           
                 <tr>
                     <td valign="top">
@@ -166,12 +175,12 @@ export class Content extends React.Component  {
                     //    key={this.state.good.id}
                    //     value={this.state.good.value}
                         moveTodo={this.moveTodo('good')}
-                        findTodo={this.findTodo('good')}
+                        //findTodo={this.findTodo('good')}
                         data={this.state.good}
                         GoodIsSelectedInput={this.state.GoodIsSelectedInput}
                         onKeyDownHandler={this.onKeyDownHandler('good')}
                         onKeyUpHandler={this.onKeyUpHandler('good')}
-                        //onClickHandler={this.onClickHandler('good')}
+                        onClickHandler={this.onClickHandler('good')}
                         getSelectedTextCut={this.getSelectedTextCut('good')}
                         onChangeHandler={this.onChangeHandler('good')}
                 />
@@ -181,12 +190,12 @@ export class Content extends React.Component  {
                         //key={this.state.good.id}
                         //value={this.state.bad.value}
                         moveTodo={this.moveTodo('bad')}
-                        findTodo={this.findTodo('bad')}
+                        //findTodo={this.findTodo('bad')}
                         data={this.state.bad}
                         BadIsSelectedInput={this.state.BadIsSelectedInput}
                         onKeyDownHandler={this.onKeyDownHandler('bad')}
                         onKeyUpHandler={this.onKeyUpHandler('bad')}
-                        //onClickHandler={this.onClickHandler('bad')}
+                        onClickHandler={this.onClickHandler('bad')}
                         getSelectedTextCut={this.getSelectedTextCut('bad')}
                         onChangeHandler={this.onChangeHandler('bad')}
                     />
@@ -195,7 +204,7 @@ export class Content extends React.Component  {
                     )
             }
 }
-const collectDrop = (connect, monitor) => {
+const collectDrop = (connect) => {
     return {
       connectDropTarget: connect.dropTarget()
     }
