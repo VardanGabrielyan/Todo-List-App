@@ -13,10 +13,11 @@ const selectedText = window.getSelection().toString();
  class Content extends React.Component  {
     constructor(props){
         super(props)
+        const goodId = uuid();
         this.state = { 
-            good:  [{  id:  uuid(), value: ''}],
+            good:  [{  id: goodId , value: ''}],
             bad:   [{  id: uuid(), value: ''}],
-            GoodIsSelectedInput: 0,
+            GoodIsSelectedInput: goodId,
             BadIsSelectedInput: 1,
         };
     }   
@@ -74,22 +75,35 @@ const selectedText = window.getSelection().toString();
         if(type==='good'){
         this.setState({
             GoodIsSelectedInput: event.target.id,
+            BadIsSelectedInput: null,
         })
     }
         if(type==='bad'){
             this.setState({
                 BadIsSelectedInput: event.target.id,
+                GoodIsSelectedInput: null,
             })
         }
     }
-    moveTodo = (type) => (dragId, dropId) => {
+    shiftArray = () =>{
+        const goodValueLength = this.state.good.map(val => {return val.value.length})
+        const badValueLength = this.state.bad.map(val => {return val.value.length})
+        console.log(goodValueLength,'---------goodshift')
+        console.log(badValueLength,'----------badshift')
+        if(goodValueLength===0 || badValueLength===0){
+            this.setState({
+                good: this.state.good.shift(),
+                bad: this.state.bad.shift(),
+            })
+        }
+    } 
+    moveTodo = type => (dragId, dropId) => {
                 console.log('type',type)
                
             if(type==='good'){
                 const dropObject = this.state.good.find(item => item.id === dropId)
                 const dragObject = this.state.bad.find(item => item.id === dragId)
-                //console.log('dropobject',dropObject)
-                //console.log('dragobject',dragObject)
+
                     this.setState({
                         good: this.state.good.map(item => {
                             // if(dropObject.value===0){
@@ -99,17 +113,27 @@ const selectedText = window.getSelection().toString();
                             // }   else
                             return item.id === dropId ? dragObject : item
                         }),
-                        bad: this.state.bad.map(item => {
-                            return item.id === dragId ? dropObject : item
-                        }),
+                        bad: this.state.bad.reduce((acc, item) => {
+                            // if(dropObject.value===0){
+                            //     console.log('00000000000',this.state.good)
+                            //     return  this.state.good.slice(1)
+                                      
+                            // }   else
+                            if (item.id === dragId ) {
+                                dragObject.value.length && acc.push(dropObject)
+                            } else {
+                                acc.push(item)
+                            }
+                            return acc
+                        }, [])
+                       // BadIsSelectedInput: dropObject.id
                     })
             }
             if(type==='bad'){
                 
                 const dropObject = this.state.bad.find(item => item.id === dropId)
                 const dragObject = this.state.good.find(item => item.id === dragId)
-                console.log('dropobject',dropObject)
-                console.log('dragobject',dragObject)
+
                     this.setState({
                         bad: this.state.bad.map(item => {
                             return item.id === dropId ? dragObject : item
@@ -117,6 +141,11 @@ const selectedText = window.getSelection().toString();
                         good: this.state.good.map(item => {
                             return item.id === dragId ? dropObject : item
                         }),
+                    }, () => {
+                        console.log('apeeeeeeeeeeeeeeeee', this.state.good.slice(1))
+                        this.setState({
+                            good: this.state.good.slice(1)
+                        })
                     })
         }
             }
@@ -165,8 +194,8 @@ const selectedText = window.getSelection().toString();
         // }
 //}
     render (){
-        console.log(this.state.good,'good')
-        console.log(this.state.bad,'bad')
+
+
         const {connectDropTarget} = this.props
             return connectDropTarget(           
                 <tr>
@@ -183,6 +212,7 @@ const selectedText = window.getSelection().toString();
                         onClickHandler={this.onClickHandler('good')}
                         getSelectedTextCut={this.getSelectedTextCut('good')}
                         onChangeHandler={this.onChangeHandler('good')}
+                        shiftArray={this.shiftArray}
                 />
                     </td>
                     <td valign="top">
@@ -198,6 +228,7 @@ const selectedText = window.getSelection().toString();
                         onClickHandler={this.onClickHandler('bad')}
                         getSelectedTextCut={this.getSelectedTextCut('bad')}
                         onChangeHandler={this.onChangeHandler('bad')}
+                        shiftArray={this.shiftArray}
                     />
                     </td>
                 </tr>

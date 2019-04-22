@@ -4,31 +4,44 @@ import DragDropContextContainer from "../index.js"
 import { DragSource } from 'react-dnd';
 import { DropTarget } from 'react-dnd';
 import _ from 'lodash';
+import Todo from "../Todo.js"
 
  class TableInput extends React.Component {
-    inp = null;
-    state={
-        isChecked: false,
+
+
+    constructor(props) {
+    super(props);
+    // create a ref to store the textInput DOM element
+    this.inp = React.createRef();
+
+    this.state = {
+        isChecked: false
     }
-    componentDidMount() {          
-        // if (this.props.GoodIsSelectedInput) {
-        //     this.inp.focus()        
-        // };
-        // if(this.props.BadIsSelectedInput){
-        //     this.inp.focus()
-        // }
-    }
+  }
+    // componentDidMount() {                  
+    //     if (this.props.GoodIsSelectedInput) {
+    //         this.inp.focus()        
+    //     };
+    // }
     componentDidUpdate() {  
+        
         if (this.props.GoodIsSelectedInput) {
+            // console.log(this.props.GoodIsSelectedInput,'goodselectedinput')
+            // console.log(this.props.BadIsSelectedInput,'badselectedinput')
+            // console.log(this.inp,'---inp')
             this.inp.focus()        
         }
         if(this.props.BadIsSelectedInput){
+            // console.log(this.props.GoodIsSelectedInput,'goodselectedinput')
+            // console.log(this.props.BadIsSelectedInput,'badselectedinput')
+            // console.log(this.inp,'---inp')
             this.inp.focus()
-        }
+        }  
     }
     inputRef = input => this.inp = input; 
     checkHandler = e => this.setState({isChecked: e.target.checked}); 
     render() {
+        
         const { isDragging, 
                 connectDragSource, 
                 connectDropTarget, 
@@ -39,6 +52,7 @@ import _ from 'lodash';
                                     {!isDragging && 
                                         <input
                                             value={this.props.value}
+                                            autoFocus={this.props.GoodIsSelectedInput}
                                             className={this.state.isChecked && "line-through-table-input"}
                                             ref={this.inputRef}
                                             id={this.props.id}
@@ -63,7 +77,7 @@ const Types = {
 }
 const itemSource = {
     beginDrag(props) {
-        console.log(props, 'beginDrag');
+        const inp = null; 
       return {
           id: props.id,
       }
@@ -74,8 +88,7 @@ const itemSource = {
           const dragCompId = monitor.getItem().id;
           const dropCompId = props.id;
           props.moveTodo(dragCompId, dropCompId)
-          console.log( props.moveTodo(dragCompId, dropCompId),'moveTodo')
-          console.log(dropCompId,'sss',dragCompId)
+          props.shiftArray()
       }
   }
   const collectDrag = (connect, monitor) => {      

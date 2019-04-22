@@ -19,7 +19,8 @@ class Todo extends React.Component   {
             getSelectedTextCut,
             onChangeHandler,
             value,
-            onKeyUpHandler
+            onKeyUpHandler,
+            shiftArray
             } = this.props;
                 return (
                     <td valign="top">
@@ -37,6 +38,7 @@ class Todo extends React.Component   {
                                             findTodo={findTodo}
                                             moveTodo={moveTodo}
                                             onChangeHandler={onChangeHandler}
+                                            shiftArray={shiftArray}
                             /> 
                         })
                     }
