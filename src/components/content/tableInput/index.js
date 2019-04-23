@@ -25,18 +25,18 @@ import Todo from "../Todo.js"
     // }
     componentDidUpdate() {  
         
-        if (this.props.GoodIsSelectedInput) {
+      //  if (this.props.GoodIsSelectedInput) {
             // console.log(this.props.GoodIsSelectedInput,'goodselectedinput')
             // console.log(this.props.BadIsSelectedInput,'badselectedinput')
             // console.log(this.inp,'---inp')
-            this.inp.focus()        
-        }
-        if(this.props.BadIsSelectedInput){
+      //      this.inp.focus()        
+      //  }
+      //  if(this.props.BadIsSelectedInput){
             // console.log(this.props.GoodIsSelectedInput,'goodselectedinput')
             // console.log(this.props.BadIsSelectedInput,'badselectedinput')
             // console.log(this.inp,'---inp')
-            this.inp.focus()
-        }  
+      //      this.inp.focus()
+      //  }  
     }
     inputRef = input => this.inp = input; 
     checkHandler = e => this.setState({isChecked: e.target.checked}); 
@@ -88,7 +88,6 @@ const itemSource = {
           const dragCompId = monitor.getItem().id;
           const dropCompId = props.id;
           props.moveTodo(dragCompId, dropCompId)
-          props.shiftArray()
       }
   }
   const collectDrag = (connect, monitor) => {      
