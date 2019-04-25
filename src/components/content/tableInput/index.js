@@ -18,23 +18,19 @@ import Todo from "../Todo.js"
         isChecked: false
     }
   }
-    // componentDidMount() {                  
-    //     if (this.props.GoodIsSelectedInput) {
-    //         this.inp.focus()        
-    //     };
-    // }
+    
     componentDidUpdate() {  
         
       //  if (this.props.GoodIsSelectedInput) {
-            // console.log(this.props.GoodIsSelectedInput,'goodselectedinput')
-            // console.log(this.props.BadIsSelectedInput,'badselectedinput')
-            // console.log(this.inp,'---inp')
+      //       console.log(this.props.GoodIsSelectedInput,'goodselectedinput')
+      //       console.log(this.props.BadIsSelectedInput,'badselectedinput')
+      //       console.log(this.inp,'---inp')
       //      this.inp.focus()        
       //  }
       //  if(this.props.BadIsSelectedInput){
-            // console.log(this.props.GoodIsSelectedInput,'goodselectedinput')
-            // console.log(this.props.BadIsSelectedInput,'badselectedinput')
-            // console.log(this.inp,'---inp')
+      //       console.log(this.props.GoodIsSelectedInput,'goodselectedinput')
+      //       console.log(this.props.BadIsSelectedInput,'badselectedinput')
+      //       console.log(this.inp,'---inp')
       //      this.inp.focus()
       //  }  
     }

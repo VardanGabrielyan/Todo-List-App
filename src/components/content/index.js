@@ -93,14 +93,19 @@ const selectedText = window.getSelection().toString();
             if(type==='good'){
                 const dropObject = this.state.good.find(item => item.id === dropId)
                 const dragObject = this.state.bad.find(item => item.id === dragId)
+                const newGoodArray = !dropObject.value.length 
+                ? [...this.state.good.map(item =>
+                    item.id === dropId ? dragObject: item),
+                    {
+                        id: uuid(),
+                        value: '',
+                    }
+                ] 
+                : this.state.good.map(item => item.id === dropId ? dragObject: item)
 
+                
                     this.setState({
-                        good: [...this.state.good.map(item =>
-                            item.id === dropId ? dragObject: item),
-                            {
-                                id: uuid(),
-                                value: '',
-                            }],
+                        good: newGoodArray,
                         bad: this.state.bad.reduce((acc, item) => {
                             if (item.id === dragId ) {
                                 dropObject.value.length && acc.push(dropObject)
@@ -115,14 +120,18 @@ const selectedText = window.getSelection().toString();
             if(type==='bad'){
                 const dropObject = this.state.bad.find(item => item.id === dropId)
                 const dragObject = this.state.good.find(item => item.id === dragId)
+                const newBadArray = !dropObject.value.length 
+                ? [...this.state.bad.map(item =>
+                    item.id === dropId ? dragObject: item),
+                    {
+                        id: uuid(),
+                        value: '',
+                    }
+                ] 
+                : this.state.bad.map(item => item.id === dropId ? dragObject: item)
 
                     this.setState({
-                        bad: [...this.state.bad.map(item => 
-                            item.id === dropId ? dragObject : item),
-                            {
-                                id: uuid(),
-                                value: '',
-                            }],
+                        bad:    newBadArray,
                         good: this.state.good.reduce((acc, item) => {
                             if (item.id === dragId ) {
                                 dropObject.value.length && acc.push(dropObject)
@@ -181,7 +190,8 @@ const selectedText = window.getSelection().toString();
 //}
     render (){
 
-
+        console.log(this.state.good)
+        console.log(this.state.bad)
         const {connectDropTarget} = this.props
             return connectDropTarget(           
                 <tr>
