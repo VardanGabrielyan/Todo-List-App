@@ -57,12 +57,15 @@ const selectedText = window.getSelection().toString();
             }
         } 
     onKeyUpHandler = type => event => {
-        
+        const currentIndex = this.state[type].findIndex(item => item.id === event.target.id);
         const value = event.target.value;
-        console.log(value.length,'-------value')
+        const todo = [...this.state[type]]
+        console.log(value.length,'-------value',currentIndex)
             if (event.keyCode === backspace || event.keyCode === del || event.keyCode === space){
                 if (value.trim().length === 0 || (selectedText && selectedText.trim().length === value.trim().length)) {
-                    this.setState({[type]: this.state[type].slice(0, this.state[type].length - 1)})
+                    todo.splice(currentIndex,1)
+                    this.setState({[type]: todo})
+                    //this.setState({[type]: this.state[type].slice(0, this.state[type].length - 1)})
                         
                     }
                 }
@@ -190,8 +193,8 @@ const selectedText = window.getSelection().toString();
 //}
     render (){
 
-        console.log(this.state.good)
-        console.log(this.state.bad)
+        console.log(this.state.good,'-------------good')
+        console.log(this.state.bad,'--------------bad')
         const {connectDropTarget} = this.props
             return connectDropTarget(           
                 <tr>
