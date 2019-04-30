@@ -3,6 +3,9 @@ import Todo from "./Todo.js"
 import { DragDropContext, DragSource, DropTarget } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import uuid from 'uuid';
+//import reducer from '../reducers/index'
+//import store from '../store/index'
+
 
 const del=46;
 const space=32;
@@ -58,7 +61,7 @@ const selectedText = window.getSelection().toString();
         } 
     onKeyUpHandler = type => event => {
         const currentIndex = this.state[type].findIndex(item => item.id === event.target.id);
-        const value = event.target.value;
+        const value = event.target.value;   
         const todo = [...this.state[type]]
         console.log(value.length,'-------value',currentIndex)
             if (event.keyCode === backspace || event.keyCode === del || event.keyCode === space){
@@ -93,36 +96,40 @@ const selectedText = window.getSelection().toString();
     }
     moveTodo = type => (dragId, dropId) => {
                
-            if(type==='good'){
-                const dropObject = this.state.good.find(item => item.id === dropId)
-                const dragObject = this.state.bad.find(item => item.id === dragId)
-                const newGoodArray = !dropObject.value.length 
-                ? [...this.state.good.map(item =>
-                    item.id === dropId ? dragObject: item),
-                    {
-                        id: uuid(),
-                        value: '',
-                    }
-                ] 
-                : this.state.good.map(item => item.id === dropId ? dragObject: item)
+        const dragObject = this.state.bad.find(item => item.id === dragId);
+        const dropObject = this.state.good.find(item => item.id === dropId);
+        let newGoodArray = null;
+        let newBadArray = null;
 
-                
+        if (type === 'good') {
+            if (dragObject.value.length) {
+                if  (!dropObject.value.length) {
+                    newGoodArray = [...this.state.good];
+                    newGoodArray.splice(this.state.good.length - 1, 0, dragObject)
+                    newBadArray = this.state.bad.filter(badItem => badItem.id !== dragId)
+                } else {
+                    newGoodArray = this.state.good.map(item => item.id === dropId ? dragObject: item)
+                    newBadArray = this.state.bad.map(item => item.id === dragId ? dropObject: item)
+                }
+
+                this.setState({
+                    good: newGoodArray,
+                    bad: newBadArray,
+                })
+            } else if (!dragObject.value.length) {
+                if (dropObject.value.length) {
+                    newBadArray = [...this.state.bad];
+                    newBadArray.splice(this.state.bad.length - 1, 0, dropObject);
+
                     this.setState({
-                        good: newGoodArray,
-                        bad: this.state.bad.reduce((acc, item) => {
-                            if (item.id === dragId ) {
-                                dropObject.value.length && acc.push(dropObject)
-                            } else {
-                                acc.push(item)
-                            }
-                            return acc
-                        }, [])
-                       // BadIsSelectedInput: dropObject.id
-                    })
+                        good: this.state.good.filter(goodItem => goodItem.id !== dropId),
+                        bad: newBadArray,
+                    });
+                }
             }
-            if(type==='bad'){
-                const dropObject = this.state.bad.find(item => item.id === dropId)
-                const dragObject = this.state.good.find(item => item.id === dragId)
+        }
+            if(type === 'bad'){
+
                 const newBadArray = !dropObject.value.length 
                 ? [...this.state.bad.map(item =>
                     item.id === dropId ? dragObject: item),

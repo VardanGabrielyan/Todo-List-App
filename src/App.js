@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Header from "./components/header"
 import DragDropContextContainer from "./components/content"
-
+import {Provider} from 'react-redux'
+//import store from './components/content/store'
 
 class App extends Component {
   
@@ -33,6 +34,7 @@ class App extends Component {
 
   render() {
     return (
+     // <Provider store={store}>
       <div >      
         <h1> Todo List</h1>
         <table className="tableStyle">
@@ -40,6 +42,7 @@ class App extends Component {
           <DragDropContextContainer />
         </table>
       </div>
+    //  </Provider>
     );
   }
 }
