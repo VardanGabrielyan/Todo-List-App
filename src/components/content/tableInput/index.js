@@ -13,7 +13,6 @@ import Todo from "../Todo.js"
     super(props);
     // create a ref to store the textInput DOM element
     this.inp = React.createRef();
-
     this.state = {
         isChecked: false
     }
@@ -46,6 +45,7 @@ import Todo from "../Todo.js"
                             connectDropTarget(
                                 <div className="line-through">
                                     {!isDragging && 
+                                        <>
                                         <input
                                             value={this.props.value}
                                             autoFocus={this.props.GoodIsSelectedInput}
@@ -57,12 +57,14 @@ import Todo from "../Todo.js"
                                             onCut={this.props.getSelectedTextCut}
                                             onChange={this.props.onChangeHandler}
                                             onClick={this.props.onClickHandler}
-                                        />}
+                                        />
                                         <input 
                                             onClick={this.props.checkBoxClick}
                                             type="checkbox" 
                                             onChange={this.checkHandler} 
                                         />
+                                        </>
+                                      }
                                 </div>
                   )
                 )
@@ -84,7 +86,8 @@ const itemSource = {
           const dragCompId = monitor.getItem().id;
           const dropCompId = props.id;
           props.moveTodo(dragCompId, dropCompId)
-      }
+      },
+      
   }
   const collectDrag = (connect, monitor) => {      
     return {

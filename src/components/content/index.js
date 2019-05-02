@@ -95,14 +95,21 @@ const selectedText = window.getSelection().toString();
         }
     }
     moveTodo = type => (dragId, dropId) => {
-               
-        const dragObject = this.state.bad.find(item => item.id === dragId);
-        const dropObject = this.state.good.find(item => item.id === dropId);
         let newGoodArray = null;
         let newBadArray = null;
-
+        // if(dragId===dropId){
+        //     return
+        // }
         if (type === 'good') {
+            const dragObject = this.state.bad.find(item => item.id === dragId);
+            const dropObject = this.state.good.find(item => item.id === dropId);
+            if(!dragObject){
+                return
+            }
             if (dragObject.value.length) {
+                
+                console.log(dragObject,'----------dragobject')
+                
                 if  (!dropObject.value.length) {
                     newGoodArray = [...this.state.good];
                     newGoodArray.splice(this.state.good.length - 1, 0, dragObject)
@@ -110,8 +117,7 @@ const selectedText = window.getSelection().toString();
                 } else {
                     newGoodArray = this.state.good.map(item => item.id === dropId ? dragObject: item)
                     newBadArray = this.state.bad.map(item => item.id === dragId ? dropObject: item)
-                }
-
+                } 
                 this.setState({
                     good: newGoodArray,
                     bad: newBadArray,
@@ -129,29 +135,60 @@ const selectedText = window.getSelection().toString();
             }
         }
             if(type === 'bad'){
-
-                const newBadArray = !dropObject.value.length 
-                ? [...this.state.bad.map(item =>
-                    item.id === dropId ? dragObject: item),
-                    {
-                        id: uuid(),
-                        value: '',
+                const dragObject = this.state.good.find(item => item.id === dragId);
+                const dropObject = this.state.bad.find(item => item.id === dropId);
+                if(!dragObject){
+                    return
+                }
+                if (dragObject.value.length) {
+                    if  (!dropObject.value.length) {
+                        newBadArray = [...this.state.bad];
+                        newBadArray.splice(this.state.bad.length - 1, 0, dragObject)
+                        newGoodArray = this.state.good.filter(badItem => badItem.id !== dragId)
+                    } else {
+                        newBadArray = this.state.bad.map(item => item.id === dropId ? dragObject: item)
+                        newGoodArray = this.state.good.map(item => item.id === dragId ? dropObject: item)
                     }
-                ] 
-                : this.state.bad.map(item => item.id === dropId ? dragObject: item)
-
+    
                     this.setState({
-                        bad:    newBadArray,
-                        good: this.state.good.reduce((acc, item) => {
-                            if (item.id === dragId ) {
-                                dropObject.value.length && acc.push(dropObject)
-                            } else {
-                                acc.push(item)
-                            }
-                            return acc
-                        }, []),
+                        good: newGoodArray,
+                        bad: newBadArray,
+                    })
+                } else if (!dragObject.value.length) {
+                    if (dropObject.value.length) {
+                        newGoodArray = [...this.state.good];
+                        newGoodArray.splice(this.state.good.length - 1, 0, dropObject);
+    
+                        this.setState({
+                            bad: this.state.bad.filter(goodItem => goodItem.id !== dropId),
+                            good: newGoodArray,
+                        });
                     }
-)
+                }
+
+
+//                 const newBadArray = !dropObject.value.length 
+//                 ? [...this.state.bad.map(item =>
+//                     item.id === dropId ? dragObject: item),
+//                     {
+//                         id: uuid(),
+//                         value: '',
+//                     }
+//                 ] 
+//                 : this.state.bad.map(item => item.id === dropId ? dragObject: item)
+
+//                     this.setState({
+//                         bad:    newBadArray,
+//                         good: this.state.good.reduce((acc, item) => {
+//                             if (item.id === dragId ) {
+//                                 dropObject.value.length && acc.push(dropObject)
+//                             } else {
+//                                 acc.push(item)
+//                             }
+//                             return acc
+//                         }, []),
+//                     }
+// )
         }
             }
 
